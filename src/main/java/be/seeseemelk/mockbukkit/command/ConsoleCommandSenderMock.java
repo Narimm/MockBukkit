@@ -143,7 +143,6 @@ public class ConsoleCommandSenderMock implements ConsoleCommandSender, MessageTa
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
 	@Override
 	public boolean isConversing()
 	{

@@ -5,10 +5,7 @@ import static org.junit.Assert.fail;
 import java.util.Collection;
 import java.util.List;
 
-import org.bukkit.Chunk;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -21,6 +18,9 @@ import org.bukkit.plugin.Plugin;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import junit.framework.AssertionFailedError;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.RayTraceResult;
+import org.bukkit.util.Vector;
 
 public class BlockMock implements org.bukkit.block.Block
 {
@@ -28,7 +28,7 @@ public class BlockMock implements org.bukkit.block.Block
 	private BlockState state;
 	private Material material;
 	private byte data;
-	
+
 	/**
 	 * Creates a basic block made of air.
 	 */
@@ -358,6 +358,21 @@ public class BlockMock implements org.bukkit.block.Block
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
+
+	@Override
+	public boolean isPassable() {
+		return false;
+	}
+
+	@Override
+	public RayTraceResult rayTrace(Location location, Vector vector, double v, FluidCollisionMode fluidCollisionMode) {
+// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();	}
+
+	@Override
+	public BoundingBox getBoundingBox() {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();	}
 
 	@Override
 	public BlockData getBlockData()

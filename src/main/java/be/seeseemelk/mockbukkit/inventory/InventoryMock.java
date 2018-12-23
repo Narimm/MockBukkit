@@ -10,9 +10,11 @@ import java.util.ListIterator;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+import be.seeseemelk.mockbukkit.MockBukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
+import org.bukkit.entity.Item;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -152,7 +154,11 @@ public abstract class InventoryMock implements org.bukkit.inventory.Inventory
 	@Override
 	public void setItem(int index, ItemStack item)
 	{
-		items[index] = item.clone();
+		if(item == null){
+			items[index] = null;
+		}else {
+			items[index] = item.clone();
+		}
 	}
 	
 	/**
@@ -371,15 +377,17 @@ public abstract class InventoryMock implements org.bukkit.inventory.Inventory
 	@Override
 	public void clear(int index)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		if(items[index] != null)items[index].setType(Material.AIR);
 	}
 	
 	@Override
 	public void clear()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		for(ItemStack items : items){
+			if(items !=null) {
+				items.setType(Material.AIR);
+			}
+		}
 	}
 	
 	@Override

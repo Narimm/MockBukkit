@@ -9,25 +9,13 @@ import be.seeseemelk.mockbukkit.inventory.PlayerInventoryViewMock;
 import be.seeseemelk.mockbukkit.inventory.SimpleInventoryViewMock;
 import com.google.common.base.Charsets;
 import com.google.common.base.Function;
-import org.bukkit.Achievement;
-import org.bukkit.BanList;
-import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.GameMode;
-import org.bukkit.Instrument;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Note;
-import org.bukkit.Particle;
-import org.bukkit.Sound;
-import org.bukkit.SoundCategory;
-import org.bukkit.Statistic;
-import org.bukkit.WeatherType;
+import org.bukkit.*;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.conversations.Conversation;
 import org.bukkit.conversations.ConversationAbandonedEvent;
@@ -59,6 +47,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.util.BoundingBox;
+import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
 import java.net.InetSocketAddress;
@@ -507,7 +497,27 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public boolean discoverRecipe(NamespacedKey namespacedKey) {
+		return false;
+	}
+
+	@Override
+	public int discoverRecipes(Collection<NamespacedKey> collection) {
+		return 0;
+	}
+
+	@Override
+	public boolean undiscoverRecipe(NamespacedKey namespacedKey) {
+		return false;
+	}
+
+	@Override
+	public int undiscoverRecipes(Collection<NamespacedKey> collection) {
+		return 0;
+	}
+
 	@Override
 	public Entity getShoulderEntityLeft()
 	{
@@ -577,7 +587,27 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public Block getTargetBlockExact(int i) {
+		return null;
+	}
+
+	@Override
+	public Block getTargetBlockExact(int i, FluidCollisionMode fluidCollisionMode) {
+		return null;
+	}
+
+	@Override
+	public RayTraceResult rayTraceBlocks(double v) {
+		return null;
+	}
+
+	@Override
+	public RayTraceResult rayTraceBlocks(double v, FluidCollisionMode fluidCollisionMode) {
+		return null;
+	}
+
 	@Override
 	public int getRemainingAir()
 	{
@@ -1759,7 +1789,12 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public int getClientViewDistance() {
+		return 0;
+	}
+
 	@Override
 	public String getLocale()
 	{
@@ -1787,7 +1822,12 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public BoundingBox getBoundingBox() {
+		return null;
+	}
+
 	@Override
 	public boolean isPersistent()
 	{
@@ -1801,7 +1841,12 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public BlockFace getFacing() {
+		return null;
+	}
+
 	@Override
 	public String getPlayerListHeader()
 	{

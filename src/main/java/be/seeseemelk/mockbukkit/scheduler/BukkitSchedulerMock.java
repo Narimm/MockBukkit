@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import org.bukkit.plugin.Plugin;
@@ -134,6 +135,11 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	}
 
 	@Override
+	public void runTask(Plugin plugin, Consumer<BukkitTask> consumer) throws IllegalArgumentException {
+
+	}
+
+	@Override
 	public BukkitTask runTask(Plugin plugin, BukkitRunnable task) throws IllegalArgumentException
 	{
 		return runTask(plugin, (Runnable) task);
@@ -146,7 +152,14 @@ public class BukkitSchedulerMock implements BukkitScheduler
 		tasks.add(scheduledTask);
 		return scheduledTask;
 	}
-	
+
+	@Override
+	public void runTaskLater(Plugin plugin, Consumer<BukkitTask> consumer, long delay) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
 	@Override
 	public BukkitTask runTaskTimer(Plugin plugin, Runnable task, long delay, long period)
 			throws IllegalArgumentException
@@ -154,6 +167,11 @@ public class BukkitSchedulerMock implements BukkitScheduler
 		RepeatingTask repeatingTask = new RepeatingTask(id++, plugin, true, currentTick + delay, period, task);
 		tasks.add(repeatingTask);
 		return repeatingTask;
+	}
+
+	@Override
+	public void runTaskTimer(Plugin plugin, Consumer<BukkitTask> consumer, long l, long l1) throws IllegalArgumentException {
+
 	}
 
 	@Override
@@ -301,6 +319,12 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	}
 
 	@Override
+	public void runTaskAsynchronously(Plugin plugin, Consumer<BukkitTask> consumer) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
 	public BukkitTask runTaskAsynchronously(Plugin plugin, BukkitRunnable task) throws IllegalArgumentException
 	{
 		return runTaskAsynchronously(plugin, (Runnable) task);
@@ -324,6 +348,12 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	}
 
 	@Override
+	public void runTaskLaterAsynchronously(Plugin plugin, Consumer<BukkitTask> consumer, long l) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
 	public BukkitTask runTaskLaterAsynchronously(Plugin plugin, BukkitRunnable task, long delay)
 			throws IllegalArgumentException
 	{
@@ -338,6 +368,12 @@ public class BukkitSchedulerMock implements BukkitScheduler
 				currentTick + delay, period, new AsyncRunnable(task));
 		tasks.add(scheduledTask);
 		return scheduledTask;
+	}
+
+	@Override
+	public void runTaskTimerAsynchronously(Plugin plugin, Consumer<BukkitTask> consumer, long l, long l1) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
 	}
 
 	@Override

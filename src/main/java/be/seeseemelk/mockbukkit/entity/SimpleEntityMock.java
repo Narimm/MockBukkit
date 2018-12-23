@@ -2,6 +2,8 @@ package be.seeseemelk.mockbukkit.entity;
 
 import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import org.bukkit.block.BlockFace;
+import org.bukkit.util.BoundingBox;
 
 import java.util.UUID;
 
@@ -29,7 +31,12 @@ public class SimpleEntityMock extends EntityMock
 	{
 		this(server, UUID.randomUUID());
 	}
-	
+
+	@Override
+	public BoundingBox getBoundingBox() {
+		return null;
+	}
+
 	@Override
 	public boolean isPersistent()
 	{
@@ -42,5 +49,10 @@ public class SimpleEntityMock extends EntityMock
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public BlockFace getFacing() {
+		return null;
 	}
 }

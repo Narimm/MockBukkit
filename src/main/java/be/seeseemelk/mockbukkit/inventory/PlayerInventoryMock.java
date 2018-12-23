@@ -68,8 +68,13 @@ public class PlayerInventoryMock extends InventoryMock implements PlayerInventor
 	@Override
 	public void setArmorContents(ItemStack[] items)
 	{
-		if (items == null)
-			throw new NullPointerException("ItemStack was null");
+		if (items == null) {
+			setItem(BOOTS, null);
+			setItem(LEGGINGS, null);
+			setItem(CHESTPLATE, null);
+			setItem(HELMET, null);
+			return;
+		}
 		else if (items.length > 4)
 			throw new IllegalArgumentException("ItemStack array too large (max: 4, was: " + items.length + ")");
 		items = (items.length == 4) ? items : Arrays.copyOf(items, 4);

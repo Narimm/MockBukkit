@@ -13,31 +13,13 @@ import be.seeseemelk.mockbukkit.inventory.PlayerInventoryMock;
 import be.seeseemelk.mockbukkit.plugin.PluginManagerMock;
 import be.seeseemelk.mockbukkit.scheduler.BukkitSchedulerMock;
 import be.seeseemelk.mockbukkit.scoreboard.ScoreboardManagerMock;
-import org.bukkit.BanEntry;
-import org.bukkit.BanList;
+import org.bukkit.*;
 import org.bukkit.BanList.Type;
-import org.bukkit.GameMode;
-import org.bukkit.Keyed;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Server;
-import org.bukkit.Tag;
-import org.bukkit.UnsafeValues;
 import org.bukkit.Warning.WarningState;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.boss.BarColor;
-import org.bukkit.boss.BarFlag;
-import org.bukkit.boss.BarStyle;
-import org.bukkit.boss.BossBar;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandException;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.command.PluginCommand;
+import org.bukkit.boss.*;
+import org.bukkit.command.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
@@ -78,7 +60,6 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("deprecation")
 public class ServerMock implements Server
 {
 	private final Logger logger;
@@ -447,7 +428,7 @@ public class ServerMock implements Server
 		}
 		return null;
 	}
-	
+
 	@Override
 	public PluginManagerMock getPluginManager()
 	{
@@ -877,7 +858,17 @@ public class ServerMock implements Server
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public ItemStack createExplorerMap(World world, Location location, StructureType structureType) {
+		return null;
+	}
+
+	@Override
+	public ItemStack createExplorerMap(World world, Location location, StructureType structureType, int i, boolean b) {
+		return null;
+	}
+
 	@Override
 	public void reload()
 	{
@@ -1121,14 +1112,34 @@ public class ServerMock implements Server
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public KeyedBossBar createBossBar(NamespacedKey namespacedKey, String s, BarColor barColor, BarStyle barStyle, BarFlag... barFlags) {
+		return null;
+	}
+
+	@Override
+	public Iterator<KeyedBossBar> getBossBars() {
+		return null;
+	}
+
+	@Override
+	public KeyedBossBar getBossBar(NamespacedKey namespacedKey) {
+		return null;
+	}
+
+	@Override
+	public boolean removeBossBar(NamespacedKey namespacedKey) {
+		return false;
+	}
+
 	@Override
 	public Entity getEntity(UUID uuid)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
 	@Override
 	public Advancement getAdvancement(NamespacedKey key)
 	{
@@ -1148,7 +1159,7 @@ public class ServerMock implements Server
 	{
 		return unsafe;
 	}
-	
+
 	@Override
 	public BlockData createBlockData(Material material)
 	{

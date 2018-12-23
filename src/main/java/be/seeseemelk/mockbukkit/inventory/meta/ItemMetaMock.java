@@ -2,23 +2,20 @@ package be.seeseemelk.mockbukkit.inventory.meta;
 
 import static java.util.Objects.nonNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import com.google.common.collect.Multimap;
 import org.bukkit.Material;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 
 public class ItemMetaMock implements ItemMeta, Damageable
 {
@@ -384,7 +381,57 @@ public class ItemMetaMock implements ItemMeta, Damageable
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public boolean hasAttributeModifiers() {
+		return false;
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+		return null;
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot) {
+		return null;
+	}
+
+	@Override
+	public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute) {
+		return null;
+	}
+
+	@Override
+	public boolean addAttributeModifier(Attribute attribute, AttributeModifier attributeModifier) {
+		return false;
+	}
+
+	@Override
+	public void setAttributeModifiers(Multimap<Attribute, AttributeModifier> multimap) {
+
+	}
+
+	@Override
+	public boolean removeAttributeModifier(Attribute attribute) {
+		return false;
+	}
+
+	@Override
+	public boolean removeAttributeModifier(EquipmentSlot equipmentSlot) {
+		return false;
+	}
+
+	@Override
+	public boolean removeAttributeModifier(Attribute attribute, AttributeModifier attributeModifier) {
+		return false;
+	}
+
+	@Override
+	public CustomItemTagContainer getCustomTagContainer() {
+		return null;
+	}
+
 	@Override
 	public boolean hasDamage()
 	{

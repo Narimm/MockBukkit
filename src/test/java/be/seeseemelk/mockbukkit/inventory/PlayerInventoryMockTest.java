@@ -231,13 +231,7 @@ public class PlayerInventoryMockTest
 		assertEquals(item, contents[0]);
 		assertEquals(item, inventory.getItemInOffHand());
 	}
-	
-	@Test(expected = NullPointerException.class)
-	public void setArmorContents_Null_Exception()
-	{
-		inventory.setArmorContents(null);
-	}
-	
+
 	@Test(expected = NullPointerException.class)
 	public void setExtraContents_Null_Exception()
 	{

@@ -9,11 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.bukkit.OfflinePlayer;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Score;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.scoreboard.*;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 
@@ -162,11 +158,17 @@ public class ScoreboardMock implements Scoreboard
 	}
 
 	@Override
-	public Objective registerNewObjective(String name, String criteria, String displayName)
-			throws IllegalArgumentException
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+	public Objective registerNewObjective(String name, String criteria, String displayName){
+		ObjectiveMock objective = new ObjectiveMock(this, name, criteria);
+		objectives.put(name, objective);
+		return objective;
+	}
+
+	@Override
+	public Objective registerNewObjective(String name, String criteria, String displayName, RenderType renderType) throws IllegalArgumentException {
+		ObjectiveMock objective = new ObjectiveMock(this, name, criteria);
+		objectives.put(name, objective);
+		return objective;
 	}
 
 }
