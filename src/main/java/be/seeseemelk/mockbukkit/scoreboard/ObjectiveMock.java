@@ -9,7 +9,6 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.RenderType;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
-import org.bukkit.scoreboard.RenderType;
 
 @SuppressWarnings("deprecation")
 public class ObjectiveMock implements Objective
@@ -93,15 +92,6 @@ public class ObjectiveMock implements Objective
 	public DisplaySlot getDisplaySlot() throws IllegalStateException
 	{
 		return displaySlot;
-	}
-
-	@Override
-	public void setRenderType(RenderType renderType) throws IllegalStateException {
-	}
-
-	@Override
-	public RenderType getRenderType() throws IllegalStateException {
-		return renderType;
 	}
 
 	@Override

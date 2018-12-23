@@ -17,7 +17,6 @@ import be.seeseemelk.mockbukkit.UnimplementedOperationException;
  * @author SimplyBallistic
  **/
 public class BookMetaMock extends ItemMetaMock implements BookMeta {
-	private BookMeta.Spigot spigot;
     private String title;
     private List<String> pages = new ArrayList<>();
     private String author;
@@ -156,13 +155,5 @@ public class BookMetaMock extends ItemMetaMock implements BookMeta {
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
 
-	@Override
-	public BookMeta.Spigot spigot() {
-		if (spigot == null)
-			spigot = new BookMeta.Spigot();
-
-		return spigot;
-	}
 }
