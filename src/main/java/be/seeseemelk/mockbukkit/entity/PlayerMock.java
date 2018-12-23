@@ -1,15 +1,33 @@
 package be.seeseemelk.mockbukkit.entity;
 
-import be.seeseemelk.mockbukkit.MockBukkit;
-import be.seeseemelk.mockbukkit.ServerMock;
-import be.seeseemelk.mockbukkit.UnimplementedOperationException;
-import be.seeseemelk.mockbukkit.attribute.AttributeInstanceMock;
-import be.seeseemelk.mockbukkit.inventory.PlayerInventoryMock;
-import be.seeseemelk.mockbukkit.inventory.PlayerInventoryViewMock;
-import be.seeseemelk.mockbukkit.inventory.SimpleInventoryViewMock;
-import com.google.common.base.Charsets;
-import com.google.common.base.Function;
-import org.bukkit.*;
+import static org.junit.Assert.assertEquals;
+
+import java.net.InetSocketAddress;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.EnumMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+
+import org.bukkit.Achievement;
+import org.bukkit.BanList;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.FluidCollisionMode;
+import org.bukkit.GameMode;
+import org.bukkit.Instrument;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Note;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.Statistic;
+import org.bukkit.WeatherType;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.advancement.AdvancementProgress;
 import org.bukkit.attribute.Attribute;
@@ -51,17 +69,16 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
-import java.net.InetSocketAddress;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.EnumMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import com.google.common.base.Charsets;
+import com.google.common.base.Function;
 
-import static org.junit.Assert.assertEquals;
+import be.seeseemelk.mockbukkit.MockBukkit;
+import be.seeseemelk.mockbukkit.ServerMock;
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import be.seeseemelk.mockbukkit.attribute.AttributeInstanceMock;
+import be.seeseemelk.mockbukkit.inventory.PlayerInventoryMock;
+import be.seeseemelk.mockbukkit.inventory.PlayerInventoryViewMock;
+import be.seeseemelk.mockbukkit.inventory.SimpleInventoryViewMock;
 
 @SuppressWarnings("deprecation")
 public class PlayerMock extends EntityMock implements Player
@@ -497,27 +514,7 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
-	@Override
-	public boolean discoverRecipe(NamespacedKey namespacedKey) {
-		return false;
-	}
-
-	@Override
-	public int discoverRecipes(Collection<NamespacedKey> collection) {
-		return 0;
-	}
-
-	@Override
-	public boolean undiscoverRecipe(NamespacedKey namespacedKey) {
-		return false;
-	}
-
-	@Override
-	public int undiscoverRecipes(Collection<NamespacedKey> collection) {
-		return 0;
-	}
-
+	
 	@Override
 	public Entity getShoulderEntityLeft()
 	{
@@ -587,27 +584,7 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
-	@Override
-	public Block getTargetBlockExact(int i) {
-		return null;
-	}
-
-	@Override
-	public Block getTargetBlockExact(int i, FluidCollisionMode fluidCollisionMode) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceBlocks(double v) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceBlocks(double v, FluidCollisionMode fluidCollisionMode) {
-		return null;
-	}
-
+	
 	@Override
 	public int getRemainingAir()
 	{
@@ -1789,12 +1766,7 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
-	@Override
-	public int getClientViewDistance() {
-		return 0;
-	}
-
+	
 	@Override
 	public String getLocale()
 	{
@@ -1822,12 +1794,7 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
-	@Override
-	public BoundingBox getBoundingBox() {
-		return null;
-	}
-
+	
 	@Override
 	public boolean isPersistent()
 	{
@@ -1841,12 +1808,7 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
-	@Override
-	public BlockFace getFacing() {
-		return null;
-	}
-
+	
 	@Override
 	public String getPlayerListHeader()
 	{
@@ -1895,5 +1857,82 @@ public class PlayerMock extends EntityMock implements Player
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public boolean discoverRecipe(NamespacedKey recipe)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public int discoverRecipes(Collection<NamespacedKey> recipes)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public boolean undiscoverRecipe(NamespacedKey recipe)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public int undiscoverRecipes(Collection<NamespacedKey> recipes)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public Block getTargetBlockExact(int maxDistance)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public Block getTargetBlockExact(int maxDistance, FluidCollisionMode fluidCollisionMode)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceBlocks(double maxDistance)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceBlocks(double maxDistance, FluidCollisionMode fluidCollisionMode)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public BoundingBox getBoundingBox()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public BlockFace getFacing()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public int getClientViewDistance()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
 }

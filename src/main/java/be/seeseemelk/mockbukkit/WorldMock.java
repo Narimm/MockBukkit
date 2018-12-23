@@ -319,12 +319,7 @@ public class WorldMock implements World
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
-	@Override
-	public boolean isChunkGenerated(int i, int i1) {
-		return false;
-	}
-
+	
 	@Override
 	public boolean isChunkInUse(int x, int z)
 	{
@@ -511,62 +506,7 @@ public class WorldMock implements World
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
-	@Override
-	public Collection<Entity> getNearbyEntities(Location location, double v, double v1, double v2, Predicate<Entity> predicate) {
-		return null;
-	}
-
-	@Override
-	public Collection<Entity> getNearbyEntities(BoundingBox boundingBox) {
-		return null;
-	}
-
-	@Override
-	public Collection<Entity> getNearbyEntities(BoundingBox boundingBox, Predicate<Entity> predicate) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceEntities(Location location, Vector vector, double v) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceEntities(Location location, Vector vector, double v, double v1) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceEntities(Location location, Vector vector, double v, Predicate<Entity> predicate) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceEntities(Location location, Vector vector, double v, double v1, Predicate<Entity> predicate) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceBlocks(Location location, Vector vector, double v) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceBlocks(Location location, Vector vector, double v, FluidCollisionMode fluidCollisionMode) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTraceBlocks(Location location, Vector vector, double v, FluidCollisionMode fluidCollisionMode, boolean b) {
-		return null;
-	}
-
-	@Override
-	public RayTraceResult rayTrace(Location location, Vector vector, double v, FluidCollisionMode fluidCollisionMode, boolean b, double v1, Predicate<Entity> predicate) {
-		return null;
-	}
-
+	
 	@Override
 	public long getTime()
 	{
@@ -1165,22 +1105,7 @@ public class WorldMock implements World
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
-	@Override
-	public <T> void spawnParticle(Particle particle, Location location, int i, double v, double v1, double v2, double v3, T t, boolean b) {
-
-	}
-
-	@Override
-	public <T> void spawnParticle(Particle particle, double v, double v1, double v2, int i, double v3, double v4, double v5, double v6, T t, boolean b) {
-
-	}
-
-	@Override
-	public Location locateNearestStructure(Location location, StructureType structureType, int i, boolean b) {
-		return null;
-	}
-
+	
 	@Override
 	public FallingBlock spawnFallingBlock(Location location, BlockData data) throws IllegalArgumentException
 	{
@@ -1208,5 +1133,120 @@ public class WorldMock implements World
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
+
+	@Override
+	public boolean isChunkGenerated(int x, int z)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public Collection<Entity> getNearbyEntities(Location location, double x, double y, double z,
+			Predicate<Entity> filter)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public Collection<Entity> getNearbyEntities(BoundingBox boundingBox)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public Collection<Entity> getNearbyEntities(BoundingBox boundingBox, Predicate<Entity> filter)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceEntities(Location start, Vector direction, double maxDistance)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceEntities(Location start, Vector direction, double maxDistance, double raySize)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceEntities(Location start, Vector direction, double maxDistance,
+			Predicate<Entity> filter)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceEntities(Location start, Vector direction, double maxDistance, double raySize,
+			Predicate<Entity> filter)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceBlocks(Location start, Vector direction, double maxDistance)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceBlocks(Location start, Vector direction, double maxDistance,
+			FluidCollisionMode fluidCollisionMode)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTraceBlocks(Location start, Vector direction, double maxDistance,
+			FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RayTraceResult rayTrace(Location start, Vector direction, double maxDistance,
+			FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks, double raySize,
+			Predicate<Entity> filter)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public <T> void spawnParticle(Particle particle, Location location, int count, double offsetX, double offsetY,
+			double offsetZ, double extra, T data, boolean force)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public <T> void spawnParticle(Particle particle, double x, double y, double z, int count, double offsetX,
+			double offsetY, double offsetZ, double extra, T data, boolean force)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public Location locateNearestStructure(Location origin, StructureType structureType, int radius,
+			boolean findUnexplored)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
 }

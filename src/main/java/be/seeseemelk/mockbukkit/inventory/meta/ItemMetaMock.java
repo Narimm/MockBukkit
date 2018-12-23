@@ -2,9 +2,17 @@ package be.seeseemelk.mockbukkit.inventory.meta;
 
 import static java.util.Objects.nonNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import com.google.common.collect.Multimap;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -13,6 +21,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import com.google.common.collect.Multimap;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
@@ -383,51 +393,6 @@ public class ItemMetaMock implements ItemMeta, Damageable
 	}
 
 	@Override
-	public boolean hasAttributeModifiers() {
-		return false;
-	}
-
-	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
-		return null;
-	}
-
-	@Override
-	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot equipmentSlot) {
-		return null;
-	}
-
-	@Override
-	public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute) {
-		return null;
-	}
-
-	@Override
-	public boolean addAttributeModifier(Attribute attribute, AttributeModifier attributeModifier) {
-		return false;
-	}
-
-	@Override
-	public void setAttributeModifiers(Multimap<Attribute, AttributeModifier> multimap) {
-
-	}
-
-	@Override
-	public boolean removeAttributeModifier(Attribute attribute) {
-		return false;
-	}
-
-	@Override
-	public boolean removeAttributeModifier(EquipmentSlot equipmentSlot) {
-		return false;
-	}
-
-	@Override
-	public boolean removeAttributeModifier(Attribute attribute, AttributeModifier attributeModifier) {
-		return false;
-	}
-
-	@Override
 	public CustomItemTagContainer getCustomTagContainer() {
 		return null;
 	}
@@ -448,5 +413,69 @@ public class ItemMetaMock implements ItemMeta, Damageable
 	public void setDamage(int damage)
 	{
 		this.damage = damage;
+	}
+
+
+	@Override
+	public boolean hasAttributeModifiers()
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean addAttributeModifier(Attribute attribute, AttributeModifier modifier)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean removeAttributeModifier(Attribute attribute)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeAttributeModifier(EquipmentSlot slot)
+	{
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean removeAttributeModifier(Attribute attribute, AttributeModifier modifier)
+	{
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

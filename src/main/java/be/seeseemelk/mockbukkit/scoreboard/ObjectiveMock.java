@@ -6,10 +6,12 @@ import java.util.Map;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.RenderType;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.scoreboard.RenderType;
 
+@SuppressWarnings("deprecation")
 public class ObjectiveMock implements Objective
 {
 	private final ScoreboardMock scoreboard;
@@ -119,6 +121,20 @@ public class ObjectiveMock implements Objective
 			scores.put(entry, score);
 			return score;
 		}
+	}
+
+	@Override
+	public void setRenderType(RenderType renderType) throws IllegalStateException
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public RenderType getRenderType() throws IllegalStateException
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
 	}
 
 }

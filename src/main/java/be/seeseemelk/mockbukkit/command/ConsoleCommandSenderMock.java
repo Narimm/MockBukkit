@@ -183,4 +183,11 @@ public class ConsoleCommandSenderMock implements ConsoleCommandSender, MessageTa
 	{
 		messages.add(message);
 	}
+
+	@Override
+	public Spigot spigot()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
 }
