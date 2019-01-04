@@ -154,9 +154,16 @@ public class TeamMockTest {
         assertEquals(Team.OptionStatus.ALWAYS,status);
     }
     
+    @Test
+    public void unregister_FirstUnregister_Works()
+    {
+    	team.unregister();
+    }
+    
     @Test(expected = IllegalStateException.class)
-    public void unRegister() {
+    public void unregister_UnregisteredTwice_ThrowsException()
+    {
         team.unregister();
-        
+        team.unregister();
     }
 }

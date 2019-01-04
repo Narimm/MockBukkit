@@ -244,8 +244,12 @@ public class TeamMock implements Team {
     }
     
     @Override
-    public void unregister() throws IllegalStateException {
-        this.registered = false;
+    public void unregister() throws IllegalStateException
+    {
+    	if (!registered)
+    		throw new IllegalStateException("Team not registered");
+    	
+        registered = false;
     }
     
     /**
