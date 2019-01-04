@@ -2,6 +2,7 @@ package be.seeseemelk.mockbukkit.command;
 
 import static org.junit.Assert.*;
 
+import org.bukkit.ChatColor;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -22,6 +23,9 @@ public class ConsoleCommandSenderMockTest
 		sender.sendMessage("Other");
 		assertEquals("Hello", sender.nextMessage());
 		assertEquals("Other", sender.nextMessage());
+		sender.setOutputOnSend(true);
+		sender.sendMessage("Hello there");
+		sender.sendMessage(ChatColor.AQUA+"Hello in AQUA");
 	}
 	
 	@Test

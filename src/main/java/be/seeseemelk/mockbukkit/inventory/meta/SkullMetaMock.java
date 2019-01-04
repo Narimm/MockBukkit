@@ -6,6 +6,7 @@ import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.inventory.meta.tags.CustomItemTagContainer;
 
 /**
  * Created by SimplyBallistic on 27/10/2018
@@ -30,7 +31,14 @@ public class SkullMetaMock extends ItemMetaMock implements SkullMeta {
         this.owner = owner;
         return true;
     }
-
+    
+    /** @deprecated  */
+    @Override
+    public CustomItemTagContainer getCustomTagContainer() {
+        // TODO Auto-generated method stub
+        throw new UnimplementedOperationException();
+    }
+    
     @Override
     public SkullMetaMock clone() {
         SkullMetaMock mock = (SkullMetaMock) super.clone();

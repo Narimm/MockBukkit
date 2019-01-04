@@ -80,7 +80,6 @@ import be.seeseemelk.mockbukkit.inventory.PlayerInventoryMock;
 import be.seeseemelk.mockbukkit.inventory.PlayerInventoryViewMock;
 import be.seeseemelk.mockbukkit.inventory.SimpleInventoryViewMock;
 
-@SuppressWarnings("deprecation")
 public class PlayerMock extends EntityMock implements Player
 {
 	private static final double MAX_HEALTH = 20.0;
@@ -1477,6 +1476,24 @@ public class PlayerMock extends EntityMock implements Player
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
+	}
+	
+	@Override
+	public boolean sleep(Location location, boolean b) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();	}
+	
+	@Override
+	public void wakeup(boolean b) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+	
+	@Override
+	public Location getBedLocation() {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+		
 	}
 	
 	@Override

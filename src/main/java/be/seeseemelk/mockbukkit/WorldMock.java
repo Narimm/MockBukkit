@@ -385,8 +385,7 @@ public class WorldMock implements World
 	}
 	
 	@Override
-	public boolean regenerateChunk(int x, int z)
-	{
+	public boolean regenerateChunk(int x, int z) {
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
@@ -395,6 +394,24 @@ public class WorldMock implements World
 	@Deprecated
 	public boolean refreshChunk(int x, int z)
 	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+	
+	@Override
+	public boolean isChunkForceLoaded(int i, int i1) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+	
+	@Override
+	public void setChunkForceLoaded(int i, int i1, boolean b) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+	
+	@Override
+	public Collection<Chunk> getForceLoadedChunks() {
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}

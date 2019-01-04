@@ -1,5 +1,13 @@
 package be.seeseemelk.mockbukkit.command;
 
+import java.io.Console;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
+import be.seeseemelk.mockbukkit.ChatColor;
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.Server;
 import org.bukkit.command.ConsoleCommandSender;
@@ -9,34 +17,30 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
-
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Set;
+import org.fusesource.jansi.Ansi;
 
 public class ConsoleCommandSenderMock implements ConsoleCommandSender, MessageTarget
 {
 	public Queue<String> messages = new LinkedList<>();
-	
-	@Override
-	public void sendMessage(String message)
-	{
-		messages.add(message);
-	}
-	
-	@Override
-	public void sendMessage(String[] messages)
-	{
-		for (String message : messages)
-		{
-			sendMessage(message);
-		}
+	private boolean outputOnSend = false;
+
+	public void setOutputOnSend(boolean outputOnSend) {
+		this.outputOnSend = outputOnSend;
 	}
 	
 	@Override
 	public String nextMessage()
 	{
 		return messages.poll();
+	}	@Override
+	public void sendMessage(String message)
+	{
+		String mess = ChatColor.translateColors(message);
+		if(outputOnSend) {
+			System.out.println(Ansi.ansi().reset()+"[CONSOLE SENDER]"+mess+Ansi.ansi().reset());
+		}else {
+			messages.add(mess);
+		}
 	}
 	
 	@Override
@@ -44,6 +48,13 @@ public class ConsoleCommandSenderMock implements ConsoleCommandSender, MessageTa
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
+	}	@Override
+	public void sendMessage(String[] messages)
+	{
+		for (String message : messages)
+		{
+			sendMessage(message);
+		}
 	}
 	
 	@Override
@@ -131,19 +142,6 @@ public class ConsoleCommandSenderMock implements ConsoleCommandSender, MessageTa
 	}
 	
 	@Override
-	public Server getServer()
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-	
-	@Override
-	public String getName()
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-	@Override
 	public boolean isConversing()
 	{
 		// TODO Auto-generated method stub
@@ -162,6 +160,11 @@ public class ConsoleCommandSenderMock implements ConsoleCommandSender, MessageTa
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
+	}	@Override
+	public Server getServer()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
 	}
 	
 	@Override
@@ -169,8 +172,13 @@ public class ConsoleCommandSenderMock implements ConsoleCommandSender, MessageTa
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
+	}	@Override
+	public String getName()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
 	}
-	
+
 	@Override
 	public void abandonConversation(Conversation conversation, ConversationAbandonedEvent details)
 	{
@@ -183,5 +191,13 @@ public class ConsoleCommandSenderMock implements ConsoleCommandSender, MessageTa
 	{
 		messages.add(message);
 	}
+	
+
+	
+
+	
+
+	
+
 
 }
