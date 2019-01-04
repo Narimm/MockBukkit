@@ -12,6 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.LinkedTransferQueue;
 
+import be.seeseemelk.mockbukkit.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
@@ -32,10 +33,12 @@ import be.seeseemelk.mockbukkit.ServerMock;
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import be.seeseemelk.mockbukkit.command.MessageTarget;
 import be.seeseemelk.mockbukkit.metadata.MetadataTable;
+import org.fusesource.jansi.Ansi;
 
 public abstract class EntityMock implements Entity, MessageTarget
 {
 	private final ServerMock server;
+	private boolean outputOnSend = false;
 	private final UUID uuid;
 	private Location location;
 	private boolean teleported;
@@ -55,6 +58,10 @@ public abstract class EntityMock implements Entity, MessageTarget
 			location = Bukkit.getWorlds().get(0).getSpawnLocation();
 		else
 			location = new Location(null, 0, 0, 0);
+	}
+	
+	public void setOutputOnSend(boolean outputOnSend) {
+		this.outputOnSend = outputOnSend;
 	}
 	
 	@Override
@@ -254,7 +261,13 @@ public abstract class EntityMock implements Entity, MessageTarget
 	@Override
 	public void sendMessage(String message)
 	{
-		messages.add(message);
+		String mess = ChatColor.translateColors(message);
+		if(outputOnSend) {
+			System.out.println(Ansi.ansi().reset()+"[ENTITY: "+name+" ]"+mess+Ansi.ansi().reset());
+			messages.add(mess);
+		}else {
+			messages.add(mess);
+		}
 	}
 
 	@Override
