@@ -95,7 +95,7 @@ public class ServerMock implements Server
 	private final List<World> worlds = new ArrayList<>();
 	private List<Recipe> recipes = new LinkedList<>();
 	private final ItemFactory factory = new ItemFactoryMock();
-	private final PlayerMockFactory playerFactory = new PlayerMockFactory(this);
+	private PlayerMockFactory playerFactory = new PlayerMockFactory(this,PlayerMock.class);
 	private final PluginManagerMock pluginManager = new PluginManagerMock(this);
 	private final ScoreboardManagerMock scoreboardManager = new ScoreboardManagerMock();
 	private ConsoleCommandSender consoleSender;
@@ -139,6 +139,10 @@ public class ServerMock implements Server
 	{
 		if (!isOnMainThread())
 			throw new ThreadAccessException("The Bukkit API was accessed from asynchronous code.");
+	}
+
+	private void setPlayerFactory(PlayerMockFactory factory){
+		this.playerFactory = factory;
 	}
 	
 	/**

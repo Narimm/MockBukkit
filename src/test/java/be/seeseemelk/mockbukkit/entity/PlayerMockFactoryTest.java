@@ -20,7 +20,7 @@ public class PlayerMockFactoryTest
 	public void setUp() throws Exception
 	{
  		server = MockBukkit.mock();
- 		factory = new PlayerMockFactory(server);
+ 		factory = PlayerMockFactory.create(server);
 	}
  	
  	@After

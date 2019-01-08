@@ -90,8 +90,11 @@ public class PlayerMock extends EntityMock implements Player
 	private String displayName = null;
 	private double health = 20.0;
 	private boolean whitelisted = true;
+	private boolean sneaking = false;
+	private boolean sprinting = false;
 	private Map<Attribute, AttributeInstanceMock> attributes;
 	private InventoryView inventoryView;
+	private Set<PotionEffect> potionEffects;
 	
 	{
 		attributes = new EnumMap<>(Attribute.class);
@@ -119,6 +122,8 @@ public class PlayerMock extends EntityMock implements Player
 		
 		setLocation(Bukkit.getWorlds().get(0).getSpawnLocation().clone());
 		closeInventory();
+		potionEffects = new HashSet<>();
+
 	}
 	
 	/**
@@ -132,7 +137,7 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	/**
-	 * Simulates the player damaging a block just like {@link simulateBlockDamage}.
+	 * Simulates the player damaging a block just like {@link this.simulateBlockDamage}.
 	 * However, if {@code InstaBreak} is enabled, it will not automatically fire a
 	 * {@link BlockBreakEvent}. It will also still fire a {@link BlockDamageEvent}
 	 * even if the player is not in survival mode.
@@ -664,50 +669,72 @@ public class PlayerMock extends EntityMock implements Player
 	@Override
 	public boolean addPotionEffect(PotionEffect effect)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		for(PotionEffect e:potionEffects){
+			if(e.getType() == effect.getType())
+				return false;
+		}
+		return potionEffects.add(effect);
 	}
 	
 	@Override
 	public boolean addPotionEffect(PotionEffect effect, boolean force)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		PotionEffect existing = null;
+		for(PotionEffect e:potionEffects){
+			if(e.getType() == effect.getType())
+				existing = e;
+		}
+		if(existing!= null) potionEffects.remove(existing);
+		return potionEffects.add(effect);
 	}
 	
 	@Override
 	public boolean addPotionEffects(Collection<PotionEffect> effects)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		boolean success = true;
+		for(PotionEffect e:effects){
+			if(!addPotionEffect(e))
+				success = false;
+		}
+		return success;
 	}
 	
 	@Override
 	public boolean hasPotionEffect(PotionEffectType type)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		for(PotionEffect e:potionEffects){
+			if(e.getType() == type)
+				return true;
+		}
+		return false;
 	}
 	
 	@Override
 	public PotionEffect getPotionEffect(PotionEffectType type)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		for(PotionEffect effect:potionEffects){
+			if(effect.getType() == type)
+				return effect;
+		}
+		return null;
 	}
 	
 	@Override
 	public void removePotionEffect(PotionEffectType type)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+
+		Set<PotionEffect> remove = new HashSet<>();
+		for(PotionEffect effect:potionEffects){
+			if(effect.getType() == type)
+			remove.add(effect);
+		}
+		potionEffects.removeAll(remove);
 	}
 	
 	@Override
 	public Collection<PotionEffect> getActivePotionEffects()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return potionEffects;
 	}
 	
 	@Override
@@ -983,29 +1010,25 @@ public class PlayerMock extends EntityMock implements Player
 	@Override
 	public boolean isSneaking()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return sneaking;
 	}
 	
 	@Override
 	public void setSneaking(boolean sneak)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		sneaking = sneak;
 	}
 	
 	@Override
 	public boolean isSprinting()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return sprinting;
 	}
 	
 	@Override
 	public void setSprinting(boolean sprinting)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		this.sprinting = sprinting;
 	}
 	
 	@Override

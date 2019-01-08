@@ -1,5 +1,6 @@
 package be.seeseemelk.mockbukkit.entity;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -7,18 +8,24 @@ import java.util.UUID;
 
 import be.seeseemelk.mockbukkit.ServerMock;
 
-public final class PlayerMockFactory
+public final class PlayerMockFactory<T extends PlayerMock>
 {
 	private static final String[] FIRST_NAMES = {"James", "Mary", "John", "Particia", "Robert", "Jennifer", "Michael", "Elizabeth", "William", "Linda"};
 	private static final String[] LAST_NAMES = {"Smith", "Johnson", "Jones", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson"};
 
+	private Class mockClass;
 	private final ServerMock server;
 	private Random random = new Random();
 	private Set<String> usedNames = new HashSet<>();
-	
-	public PlayerMockFactory(ServerMock server)
+
+	public static PlayerMockFactory<PlayerMock> create(ServerMock mock){
+		return new PlayerMockFactory<>(mock,PlayerMock.class);
+	}
+
+	public PlayerMockFactory(ServerMock server,Class<T> clazz)
 	{
 		this.server = server;
+		mockClass = clazz;
 	}
 	
 	/**
@@ -59,11 +66,16 @@ public final class PlayerMockFactory
 	 * Create a random player mock object with a unique name.
 	 * @return A newly created player mock object.
 	 */
-	public PlayerMock createRandomPlayer()
+	public T createRandomPlayer()
 	{
 		String name = getUniqueRandomName();
 		UUID uuid = new UUID(random.nextLong(), random.nextLong());
-		return new PlayerMock(server, name, uuid);
+		try {
+			return ((T)mockClass.getConstructor(ServerMock.class, String.class, UUID.class).newInstance(server,name,uuid));
+		}catch (NoSuchMethodException|InstantiationError|IllegalAccessException|IllegalArgumentException|InstantiationException| InvocationTargetException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/**
@@ -71,10 +83,14 @@ public final class PlayerMockFactory
 	 * It will not however contain a UUID. 
 	 * @return A newly created player mock object.
 	 */
-	public PlayerMock createRandomOfflinePlayer()
+	public T createRandomOfflinePlayer()
 	{
-		PlayerMock player = new PlayerMock(server, getUniqueRandomName());
-		return player;
+		try {
+			return ((T)mockClass.getConstructor(ServerMock.class, String.class).newInstance(server,getUniqueRandomName()));
+		}catch (NoSuchMethodException|InstantiationError|IllegalAccessException|IllegalArgumentException|InstantiationException| InvocationTargetException e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
 

@@ -63,15 +63,15 @@ public class ServerMockTest
 	@Test
 	public void addPlayer_TwoPlayers_SizeIsTwo()
 	{
-		PlayerMockFactory factory = new PlayerMockFactory(server);
+		PlayerMockFactory factory = PlayerMockFactory.create(server);
 		PlayerMock player1 = factory.createRandomPlayer();
 		PlayerMock player2 = factory.createRandomPlayer();
-		
+		assertEquals(PlayerMock.class, player1.getClass());
 		server.addPlayer(player1);
 		assertEquals(1, server.getOnlinePlayers().size());
 		server.addPlayer(player2);
 		assertEquals(2, server.getOnlinePlayers().size());
-		
+		assertEquals(PlayerMock.class, player1.getClass());
 		assertEquals(player1, server.getPlayer(0));
 		assertEquals(player2, server.getPlayer(1));
 		

@@ -4,12 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.LinkedTransferQueue;
 
 import be.seeseemelk.mockbukkit.ChatColor;
@@ -46,14 +41,18 @@ public abstract class EntityMock implements Entity, MessageTarget
 	private MetadataTable metadataTable = new MetadataTable();
 	private boolean operator = false;
 	private String name = "entity";
+	private String customName;
 	private final Queue<String> messages = new LinkedTransferQueue<>();
 	private final Set<PermissionAttachment> permissionAttachments = new HashSet<>();
+	private final List<Entity> passengers;
+	public Entity vehicle;
+
 	
 	public EntityMock(ServerMock server, UUID uuid)
 	{
 		this.server = server;
 		this.uuid = uuid;
-		
+		this.passengers = new ArrayList<>();
 		if (Bukkit.getWorlds().size() > 0)
 			location = Bukkit.getWorlds().get(0).getSpawnLocation();
 		else
@@ -372,15 +371,13 @@ public abstract class EntityMock implements Entity, MessageTarget
 	@Override
 	public String getCustomName()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		return customName;
 	}
 	
 	@Override
 	public void setCustomName(String name)
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();	
+		customName = name;
 	}
 	
 	@Override
@@ -484,50 +481,52 @@ public abstract class EntityMock implements Entity, MessageTarget
 	@Override
 	public Entity getPassenger()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		return passengers.get(0);
+
 	}
 	
 	@Override
 	public boolean setPassenger(Entity passenger)
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		passengers.clear();
+		((EntityMock)passenger).vehicle = this;
+		return passengers.add(passenger);
 	}
 	
 	@Override
 	public List<Entity> getPassengers()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		return passengers;
 	}
 	
 	@Override
 	public boolean addPassenger(Entity passenger)
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		((EntityMock)passenger).vehicle = this;
+		return passengers.add(passenger);
 	}
 	
 	@Override
 	public boolean removePassenger(Entity passenger)
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		((EntityMock)passenger).vehicle = null;
+		return passengers.remove(passenger);
 	}
 	
 	@Override
 	public boolean isEmpty()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		return passengers.isEmpty();
 	}
 	
 	@Override
 	public boolean eject()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		for(Entity e: passengers){
+			((EntityMock)e).vehicle = null;
+		}
+		passengers.clear();
+		return true;
 	}
 	
 	@Override
@@ -586,29 +585,26 @@ public abstract class EntityMock implements Entity, MessageTarget
 	@Override
 	public EntityType getType()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		return vehicle.getType();
 	}
 	
 	@Override
 	public boolean isInsideVehicle()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		return vehicle != null;
 	}
 	
 	@Override
 	public boolean leaveVehicle()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		vehicle = null;
+		return true;
 	}
 	
 	@Override
 	public Entity getVehicle()
 	{
-		// TODO Auto-generated constructor stub
-		throw new UnimplementedOperationException();
+		return vehicle;
 	}
 	
 	@Override

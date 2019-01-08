@@ -1,13 +1,10 @@
 package be.seeseemelk.mockbukkit.entity;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static org.junit.Assume.assumeTrue;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.TimeUnit;
@@ -16,6 +13,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
@@ -28,6 +26,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,6 +40,7 @@ import be.seeseemelk.mockbukkit.inventory.ChestInventoryMock;
 import be.seeseemelk.mockbukkit.inventory.InventoryMock;
 import be.seeseemelk.mockbukkit.inventory.InventoryViewMock;
 import be.seeseemelk.mockbukkit.inventory.SimpleInventoryViewMock;
+import sun.security.tools.policytool.PolicyTool;
 
 public class PlayerMockTest
 {
@@ -502,6 +503,29 @@ public class PlayerMockTest
 			fail("Async event was not fired");
 		}
 		assertTrue(plugin.asyncEventExecuted);
+	}
+
+	@Test
+	public void addPotionEffect() {
+		PotionEffect effect = new PotionEffect(PotionEffectType.CONFUSION,10,1,true,true,true);
+		PotionEffect effect2 = new PotionEffect(PotionEffectType.CONFUSION,20,1,false,true,true);
+		PotionEffect effect3 = new PotionEffect(PotionEffectType.FIRE_RESISTANCE,20,1,false,true,true);
+		PotionEffect effect4 = new PotionEffect(PotionEffectType.BLINDNESS,20,1,false,true,true);
+		Set<PotionEffect> effects = new HashSet<>();
+		effects.add(effect3);
+		effects.add(effect4);
+		assertTrue(player.addPotionEffect(effect));
+		assertFalse(player.addPotionEffect(effect2));
+		assertEquals(effect,player.getPotionEffect(PotionEffectType.CONFUSION));
+		assertTrue(player.addPotionEffect(effect2,true));
+		assertEquals(effect2,player.getPotionEffect(PotionEffectType.CONFUSION));
+		assertTrue(player.getActivePotionEffects().size() == 1);
+		assertTrue(player.addPotionEffects(effects));
+		assertTrue(player.hasPotionEffect(PotionEffectType.BLINDNESS));
+		player.removePotionEffect(PotionEffectType.CONFUSION);
+		assertTrue(player.getActivePotionEffects().size() == 2);
+		assertFalse(player.hasPotionEffect(PotionEffectType.ABSORPTION));
+		assertNull(player.getPotionEffect(PotionEffectType.CONFUSION));
 	}
 
 }
