@@ -141,7 +141,7 @@ public class ServerMock implements Server
 			throw new ThreadAccessException("The Bukkit API was accessed from asynchronous code.");
 	}
 
-	private void setPlayerFactory(PlayerMockFactory factory){
+	public void setPlayerFactory(PlayerMockFactory factory){
 		this.playerFactory = factory;
 	}
 	
