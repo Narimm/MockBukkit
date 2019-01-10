@@ -115,6 +115,17 @@ public class WorldMock implements World
 		return block;
 	}
 	
+	/**
+	 * Replaces the mocked block at that coordinate.
+	 *
+	 * @param c
+	 * @param mock
+	 * @return
+	 */
+	public BlockMock createBlock(Coordinate c, BlockMock mock){
+		return blocks.put(c,mock);
+	}
+	
 	@Override
 	public BlockMock getBlockAt(int x, int y, int z)
 	{
