@@ -18,3 +18,4 @@
 #IDE Specific
 /out
 *.iml
+/dependency-reduced-pom.xml

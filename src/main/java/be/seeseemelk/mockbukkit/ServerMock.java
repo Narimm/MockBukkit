@@ -65,6 +65,7 @@ import org.bukkit.loot.LootTable;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicesManager;
+import org.bukkit.plugin.SimpleServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.util.CachedServerIcon;
 
@@ -100,6 +101,7 @@ public class ServerMock implements Server
 	private final ScoreboardManagerMock scoreboardManager = new ScoreboardManagerMock();
 	private ConsoleCommandSender consoleSender;
 	private BukkitSchedulerMock scheduler = new BukkitSchedulerMock();
+	private ServicesManager manager = new SimpleServicesManager();
 	private PlayerList playerList = new PlayerList();
 	private GameMode defaultGameMode = GameMode.SURVIVAL;
 	
@@ -847,8 +849,7 @@ public class ServerMock implements Server
 	@Override
 	public ServicesManager getServicesManager()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return manager;
 	}
 	
 	@Override
@@ -1048,8 +1049,7 @@ public class ServerMock implements Server
 	@Override
 	public boolean isPrimaryThread()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return isOnMainThread();
 	}
 	
 	@Override
