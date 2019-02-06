@@ -11,6 +11,9 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import be.seeseemelk.mockbukkit.MockBukkit;
+import be.seeseemelk.mockbukkit.WorldMock;
+import org.bukkit.World;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -89,6 +92,14 @@ public class BukkitSchedulerMock implements BukkitScheduler
 			else if (!task.isCancelled())
 			{
 				tasks.add(task);
+			}
+		}
+		if(MockBukkit.getMock() != null) {
+			for (World world : MockBukkit.getMock().getWorlds()) {
+				try {
+					world.setTime(world.getTime() + 1);
+				} catch (UnsupportedOperationException ignore) {
+				}
 			}
 		}
 	}

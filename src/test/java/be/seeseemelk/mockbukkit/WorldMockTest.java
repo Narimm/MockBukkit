@@ -1,10 +1,5 @@
 package be.seeseemelk.mockbukkit;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-
 import java.util.List;
 
 import org.bukkit.Location;
@@ -17,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import be.seeseemelk.mockbukkit.block.BlockMock;
+
+import static org.junit.Assert.*;
 
 public class WorldMockTest
 {
@@ -151,7 +148,48 @@ public class WorldMockTest
 		world.setName("world name");
 		assertEquals("world name", world.getName());
 	}
+	@Test
+	public void getTime_TimeSet(){
+		WorldMock world = new WorldMock();
+		WorldMock timeworld = new TimeWorldMock();
+		server.addWorld(world);
+		server.addWorld(timeworld);
+		assertEquals(0L,timeworld.getTime());
+		try{
+			world.getTime();
+			fail("World.GetTime should throw exception.");
+		}catch (Exception e){
+			assertTrue(e instanceof UnimplementedOperationException);
+		}
+		server.getScheduler().performOneTick();
+		assertEquals(1L,world.getTime());
+	}
 	
+	private class TimeWorldMock extends WorldMock{
+		private Long worldTime = 0L;
+		private Long fullTime = 0L;
+		
+		@Override
+		public long getTime() {
+			return worldTime;
+		}
+		
+		@Override
+		public void setTime(long time) {
+			worldTime = time;
+		}
+		
+		@Override
+		public long getFullTime() {
+			return fullTime;
+		}
+		
+		@Override
+		public void setFullTime(long time) {
+			fullTime = time;
+		}
+		
+	}
 }
 
 

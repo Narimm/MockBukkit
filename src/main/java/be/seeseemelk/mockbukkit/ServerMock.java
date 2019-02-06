@@ -597,7 +597,18 @@ public class ServerMock implements Server
 		return worlds.stream().filter(world -> world.getUID().equals(uid)).findAny().orElse(null);
 	}
 	
+	/**
+	 * @param i
+	 *
+	 * @deprecated
+	 */
 	@Override
+	public MapView getMap(int i) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+    
+    @Override
 	public BukkitSchedulerMock getScheduler()
 	{
 		return scheduler;
@@ -885,12 +896,6 @@ public class ServerMock implements Server
 		throw new UnimplementedOperationException();
 	}
 	
-	@Override
-	public MapView getMap(short id)
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
 	
 	@Override
 	public MapView createMap(World world)
@@ -1208,7 +1213,19 @@ public class ServerMock implements Server
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-
+	
+	/**
+	 * @param commandSender
+	 * @param s
+	 *
+	 * @deprecated
+	 */
+	@Override
+	public List<Entity> selectEntities(CommandSender commandSender, String s) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+	
 	@Override
 	public ItemStack createExplorerMap(World world, Location location, StructureType structureType)
 	{
