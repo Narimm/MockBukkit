@@ -279,6 +279,18 @@ public class ServerMock implements Server
 	}
 	
 	/**
+	 * Allows a mock to create more complex worlds to simulate various situations.
+	 *
+	 * @param mock
+	 * @return
+	 */
+	public WorldMock addWorld(WorldMock mock){
+		assertMainThread();
+		worlds.add(mock);
+		return mock;
+	}
+	
+	/**
 	 * Executes a command as the console.
 	 * 
 	 * @param command The command to execute.
