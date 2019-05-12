@@ -3,12 +3,14 @@ package be.seeseemelk.mockbukkit.entity;
 import static org.junit.Assert.assertEquals;
 
 import java.net.InetSocketAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
@@ -69,7 +71,6 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
-import com.google.common.base.Charsets;
 import com.google.common.base.Function;
 
 import be.seeseemelk.mockbukkit.MockBukkit;
@@ -80,6 +81,7 @@ import be.seeseemelk.mockbukkit.inventory.PlayerInventoryMock;
 import be.seeseemelk.mockbukkit.inventory.PlayerInventoryViewMock;
 import be.seeseemelk.mockbukkit.inventory.SimpleInventoryViewMock;
 
+@SuppressWarnings("deprecation")
 public class PlayerMock extends EntityMock implements Player
 {
 	private static final double MAX_HEALTH = 20.0;
@@ -95,16 +97,10 @@ public class PlayerMock extends EntityMock implements Player
 	private Map<Attribute, AttributeInstanceMock> attributes;
 	private InventoryView inventoryView;
 	private Set<PotionEffect> potionEffects;
-	
-	{
-		attributes = new EnumMap<>(Attribute.class);
-		attributes.put(Attribute.GENERIC_MAX_HEALTH,
-				new AttributeInstanceMock(Attribute.GENERIC_MAX_HEALTH, MAX_HEALTH));
-	}
-	
+
 	public PlayerMock(ServerMock server, String name)
 	{
-		this(server, name, UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(Charsets.UTF_8)));
+		this(server, name, UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8)));
 		this.online = false;
 	}
 	
@@ -115,10 +111,12 @@ public class PlayerMock extends EntityMock implements Player
 		setDisplayName(name);
 		this.online = true;
 		
-		if (Bukkit.getWorlds().size() == 0)
-		{
+		attributes = new EnumMap<>(Attribute.class);
+		attributes.put(Attribute.GENERIC_MAX_HEALTH,
+				new AttributeInstanceMock(Attribute.GENERIC_MAX_HEALTH, MAX_HEALTH));
+
+		if (Bukkit.getWorlds().isEmpty())
 			MockBukkit.getMock().addSimpleWorld("world");
-		}
 		
 		setLocation(Bukkit.getWorlds().get(0).getSpawnLocation().clone());
 		closeInventory();
@@ -136,6 +134,34 @@ public class PlayerMock extends EntityMock implements Player
 		assertEquals(expectedGamemode, gamemode);
 	}
 	
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(attributes, displayName, gamemode, health, inventory, inventoryView,
+				maxHealth, online, whitelisted);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (!(obj instanceof PlayerMock))
+			return false;
+		PlayerMock other = (PlayerMock) obj;
+		return Objects.equals(attributes, other.attributes) && Objects.equals(displayName, other.displayName)
+				&& gamemode == other.gamemode
+				&& Double.doubleToLongBits(health) == Double.doubleToLongBits(other.health)
+				&& Objects.equals(inventory, other.inventory) && Objects.equals(inventoryView, other.inventoryView)
+				&& Double.doubleToLongBits(maxHealth) == Double.doubleToLongBits(other.maxHealth)
+				&& online == other.online && whitelisted == other.whitelisted;
+	}
+
 	/**
 	 * Simulates the player damaging a block just like {@link this.simulateBlockDamage}.
 	 * However, if {@code InstaBreak} is enabled, it will not automatically fire a
@@ -787,7 +813,7 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
-	public Entity getLeashHolder() throws IllegalStateException
+	public Entity getLeashHolder()
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
@@ -1000,10 +1026,8 @@ public class PlayerMock extends EntityMock implements Player
 		AsyncPlayerChatEvent eventAsync = new AsyncPlayerChatEvent(false, this, msg,
 				new HashSet<>(Bukkit.getOnlinePlayers()));
 		PlayerChatEvent eventSync = new PlayerChatEvent(this, msg);
-		Bukkit.getScheduler().runTaskAsynchronously(null, () ->
-		{
-			Bukkit.getPluginManager().callEvent(eventAsync);
-		});
+		MockBukkit.getMock().getScheduler().runTaskAsynchronously(null,
+				() -> Bukkit.getPluginManager().callEvent(eventAsync));
 		Bukkit.getPluginManager().callEvent(eventSync);
 	}
 	
@@ -1158,7 +1182,7 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
-	public void sendSignChange(Location loc, String[] lines) throws IllegalArgumentException
+	public void sendSignChange(Location loc, String[] lines)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
@@ -1179,6 +1203,7 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
+	@Deprecated
 	public void awardAchievement(Achievement achievement)
 	{
 		// TODO Auto-generated method stub
@@ -1186,6 +1211,7 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
+	@Deprecated
 	public void removeAchievement(Achievement achievement)
 	{
 		// TODO Auto-generated method stub
@@ -1193,6 +1219,7 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
+	@Deprecated
 	public boolean hasAchievement(Achievement achievement)
 	{
 		// TODO Auto-generated method stub
@@ -1200,105 +1227,105 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
-	public void incrementStatistic(Statistic statistic) throws IllegalArgumentException
+	public void incrementStatistic(Statistic statistic)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void decrementStatistic(Statistic statistic) throws IllegalArgumentException
+	public void decrementStatistic(Statistic statistic)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void incrementStatistic(Statistic statistic, int amount) throws IllegalArgumentException
+	public void incrementStatistic(Statistic statistic, int amount)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void decrementStatistic(Statistic statistic, int amount) throws IllegalArgumentException
+	public void decrementStatistic(Statistic statistic, int amount)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void setStatistic(Statistic statistic, int newValue) throws IllegalArgumentException
+	public void setStatistic(Statistic statistic, int newValue)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public int getStatistic(Statistic statistic) throws IllegalArgumentException
+	public int getStatistic(Statistic statistic)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void incrementStatistic(Statistic statistic, Material material) throws IllegalArgumentException
+	public void incrementStatistic(Statistic statistic, Material material)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void decrementStatistic(Statistic statistic, Material material) throws IllegalArgumentException
+	public void decrementStatistic(Statistic statistic, Material material)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public int getStatistic(Statistic statistic, Material material) throws IllegalArgumentException
+	public int getStatistic(Statistic statistic, Material material)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void incrementStatistic(Statistic statistic, Material material, int amount) throws IllegalArgumentException
+	public void incrementStatistic(Statistic statistic, Material material, int amount)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void decrementStatistic(Statistic statistic, Material material, int amount) throws IllegalArgumentException
+	public void decrementStatistic(Statistic statistic, Material material, int amount)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void setStatistic(Statistic statistic, Material material, int newValue) throws IllegalArgumentException
+	public void setStatistic(Statistic statistic, Material material, int newValue)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void incrementStatistic(Statistic statistic, EntityType entityType) throws IllegalArgumentException
+	public void incrementStatistic(Statistic statistic, EntityType entityType)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void decrementStatistic(Statistic statistic, EntityType entityType) throws IllegalArgumentException
+	public void decrementStatistic(Statistic statistic, EntityType entityType)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public int getStatistic(Statistic statistic, EntityType entityType) throws IllegalArgumentException
+	public int getStatistic(Statistic statistic, EntityType entityType)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
@@ -1306,7 +1333,6 @@ public class PlayerMock extends EntityMock implements Player
 	
 	@Override
 	public void incrementStatistic(Statistic statistic, EntityType entityType, int amount)
-			throws IllegalArgumentException
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
@@ -1502,24 +1528,6 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
-	public boolean sleep(Location location, boolean b) {
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();	}
-	
-	@Override
-	public void wakeup(boolean b) {
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-	
-	@Override
-	public Location getBedLocation() {
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-		
-	}
-	
-	@Override
 	public boolean getAllowFlight()
 	{
 		// TODO Auto-generated method stub
@@ -1583,14 +1591,14 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
-	public void setFlySpeed(float value) throws IllegalArgumentException
+	public void setFlySpeed(float value)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public void setWalkSpeed(float value) throws IllegalArgumentException
+	public void setWalkSpeed(float value)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
@@ -1639,7 +1647,7 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
-	public void setScoreboard(Scoreboard scoreboard) throws IllegalArgumentException, IllegalStateException
+	public void setScoreboard(Scoreboard scoreboard)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
@@ -1660,7 +1668,7 @@ public class PlayerMock extends EntityMock implements Player
 	}
 	
 	@Override
-	public void setHealthScale(double scale) throws IllegalArgumentException
+	public void setHealthScale(double scale)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
@@ -1975,4 +1983,24 @@ public class PlayerMock extends EntityMock implements Player
 		throw new UnimplementedOperationException();
 	}
 
+	@Override
+	public boolean sleep(Location location, boolean force)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public void wakeup(boolean setSpawnLocation)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public Location getBedLocation()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
 }

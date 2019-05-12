@@ -10,7 +10,6 @@ import org.bukkit.scoreboard.RenderType;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 
-@SuppressWarnings("deprecation")
 public class ObjectiveMock implements Objective
 {
 	private final ScoreboardMock scoreboard;

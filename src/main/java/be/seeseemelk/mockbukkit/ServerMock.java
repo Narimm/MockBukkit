@@ -46,7 +46,6 @@ import org.bukkit.boss.BarStyle;
 import org.bukkit.boss.BossBar;
 import org.bukkit.boss.KeyedBossBar;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.command.PluginCommand;
@@ -137,7 +136,7 @@ public class ServerMock implements Server
 	 * Checks if we are running a method on the main thread. If not, a
 	 * `ThreadAccessException` is thrown.
 	 */
-	public void assertMainThread() throws ThreadAccessException
+	public void assertMainThread()
 	{
 		if (!isOnMainThread())
 			throw new ThreadAccessException("The Bukkit API was accessed from asynchronous code.");
@@ -146,7 +145,7 @@ public class ServerMock implements Server
 	public void setPlayerFactory(PlayerMockFactory factory){
 		this.playerFactory = factory;
 	}
-	
+
 	/**
 	 * Registers an entity so that the server can track it more easily. Should only
 	 * be used internally.
@@ -184,6 +183,7 @@ public class ServerMock implements Server
 	
 	/**
 	 * Creates a random player and adds it.
+	 * @return The player that was added.
 	 */
 	public PlayerMock addPlayer()
 	{
@@ -289,7 +289,7 @@ public class ServerMock implements Server
 		worlds.add(mock);
 		return mock;
 	}
-	
+
 	/**
 	 * Executes a command as the console.
 	 * 
@@ -326,8 +326,8 @@ public class ServerMock implements Server
 	public CommandResult executePlayer(Command command, String... args)
 	{
 		assertMainThread();
-		if (players.size() > 0)
-		{
+		if (!players.isEmpty())
+        {
 			return execute(command, players.get(0), args);
 		}
 		else
@@ -366,8 +366,7 @@ public class ServerMock implements Server
 		}
 		
 		boolean status = command.execute(sender, command.getName(), args);
-		CommandResult result = new CommandResult(status, (MessageTarget) sender);
-		return result;
+		return new CommandResult(status, (MessageTarget) sender);
 	}
 	
 	/**
@@ -450,9 +449,8 @@ public class ServerMock implements Server
 	public List<Player> matchPlayer(String name)
 	{
 		assertMainThread();
-		return players.stream().filter(player -> {
-			return player.getName().toLowerCase(Locale.ENGLISH).startsWith(name.toLowerCase());
-		})
+		return players.stream()
+				.filter(player -> player.getName().toLowerCase(Locale.ENGLISH).startsWith(name.toLowerCase()))
 				.collect(Collectors.toList());
 	}
 	
@@ -562,13 +560,13 @@ public class ServerMock implements Server
 	}
 	
 	@Override
-	public InventoryMock createInventory(InventoryHolder owner, int size) throws IllegalArgumentException
+	public InventoryMock createInventory(InventoryHolder owner, int size)
 	{
 		return createInventory(owner, size, "Inventory");
 	}
 	
 	@Override
-	public InventoryMock createInventory(InventoryHolder owner, int size, String title) throws IllegalArgumentException
+	public InventoryMock createInventory(InventoryHolder owner, int size, String title)
 	{
 		return createInventory(owner, InventoryType.CHEST, title, size);
 	}
@@ -597,18 +595,7 @@ public class ServerMock implements Server
 		return worlds.stream().filter(world -> world.getUID().equals(uid)).findAny().orElse(null);
 	}
 	
-	/**
-	 * @param i
-	 *
-	 * @deprecated
-	 */
 	@Override
-	public MapView getMap(int i) {
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-    
-    @Override
 	public BukkitSchedulerMock getScheduler()
 	{
 		return scheduler;
@@ -658,10 +645,10 @@ public class ServerMock implements Server
 	public Set<OfflinePlayer> getOperators()
 	{
 		assertMainThread();
-		final Set<OfflinePlayer> players = new HashSet<>();
-		players.addAll(this.offlinePlayers);
-		players.addAll(this.players);
-		return players.stream().filter(OfflinePlayer::isOp).collect(Collectors.toSet());
+		final Set<OfflinePlayer> allPlayers = new HashSet<>();
+		allPlayers.addAll(offlinePlayers);
+		allPlayers.addAll(players);
+		return allPlayers.stream().filter(OfflinePlayer::isOp).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -716,7 +703,7 @@ public class ServerMock implements Server
 	}
 	
 	@Override
-	public boolean dispatchCommand(CommandSender sender, String commandLine) throws CommandException
+	public boolean dispatchCommand(CommandSender sender, String commandLine)
 	{
 		assertMainThread();
 		String[] commands = commandLine.split(" ");
@@ -895,7 +882,6 @@ public class ServerMock implements Server
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
 	
 	@Override
 	public MapView createMap(World world)
@@ -1171,7 +1157,7 @@ public class ServerMock implements Server
 	{
 		return unsafe;
 	}
-
+	
 	@Override
 	public BlockData createBlockData(Material material)
 	{
@@ -1187,14 +1173,14 @@ public class ServerMock implements Server
 	}
 	
 	@Override
-	public BlockData createBlockData(String data) throws IllegalArgumentException
+	public BlockData createBlockData(String data)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
 	
 	@Override
-	public BlockData createBlockData(Material material, String data) throws IllegalArgumentException
+	public BlockData createBlockData(Material material, String data)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
@@ -1213,19 +1199,7 @@ public class ServerMock implements Server
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
-	
-	/**
-	 * @param commandSender
-	 * @param s
-	 *
-	 * @deprecated
-	 */
-	@Override
-	public List<Entity> selectEntities(CommandSender commandSender, String s) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-	
+
 	@Override
 	public ItemStack createExplorerMap(World world, Location location, StructureType structureType)
 	{
@@ -1264,6 +1238,27 @@ public class ServerMock implements Server
 
 	@Override
 	public boolean removeBossBar(NamespacedKey key)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public List<Entity> selectEntities(CommandSender sender, String selector)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public MapView getMap(int id)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public <T extends Keyed> Iterable<Tag<T>> getTags(String registry, Class<T> clazz)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
