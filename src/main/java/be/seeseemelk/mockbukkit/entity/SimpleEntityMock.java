@@ -39,6 +39,7 @@ public class SimpleEntityMock extends EntityMock
 	}
 	
 	@Override
+	@Deprecated
 	public boolean isPersistent()
 	{
 		// TODO Auto-generated method stub
@@ -46,6 +47,7 @@ public class SimpleEntityMock extends EntityMock
 	}
 	
 	@Override
+	@Deprecated
 	public void setPersistent(boolean persistent)
 	{
 		// TODO Auto-generated method stub

@@ -94,6 +94,7 @@ public class ChunkMock implements Chunk
 	}
 
 	@Override
+	@Deprecated
 	public boolean unload(boolean save, boolean safe)
 	{
 		return unload();
@@ -151,19 +152,6 @@ public class ChunkMock implements Chunk
 			return false;
 	}
 
-	@Override
-	public boolean isForceLoaded()
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-
-	@Override
-	public void setForceLoaded(boolean forced)
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
 
 }
 

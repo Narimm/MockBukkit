@@ -58,6 +58,7 @@ public abstract class EntityMock implements Entity, MessageTarget
 			location = Bukkit.getWorlds().get(0).getSpawnLocation();
 		else
 			location = new Location(null, 0, 0, 0);
+		passengers = new ArrayList<>();
 	}
 	
 	public void setOutputOnSend(boolean outputOnSend) {
@@ -480,6 +481,7 @@ public abstract class EntityMock implements Entity, MessageTarget
 	}
 	
 	@Override
+	@Deprecated
 	public Entity getPassenger()
 	{
 		return passengers.get(0);
@@ -487,6 +489,7 @@ public abstract class EntityMock implements Entity, MessageTarget
 	}
 	
 	@Override
+	@Deprecated
 	public boolean setPassenger(Entity passenger)
 	{
 		passengers.clear();
@@ -727,6 +730,7 @@ public abstract class EntityMock implements Entity, MessageTarget
 	}
 
 	@Override
+	@Deprecated
 	public void setRotation(float yaw, float pitch)
 	{
 		// TODO Auto-generated method stub

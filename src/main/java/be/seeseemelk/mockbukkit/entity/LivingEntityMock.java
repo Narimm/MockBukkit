@@ -70,6 +70,7 @@ public abstract class LivingEntityMock extends EntityMock implements LivingEntit
 	}
 
 	@Override
+	@Deprecated
 	public double getMaxHealth()
 	{
 		// TODO Auto-generated method stub
@@ -77,6 +78,7 @@ public abstract class LivingEntityMock extends EntityMock implements LivingEntit
 	}
 
 	@Override
+	@Deprecated
 	public void setMaxHealth(double health)
 	{
 		// TODO Auto-generated method stub
@@ -84,6 +86,7 @@ public abstract class LivingEntityMock extends EntityMock implements LivingEntit
 	}
 
 	@Override
+	@Deprecated
 	public void resetMaxHealth()
 	{
 		// TODO Auto-generated method stub
@@ -98,6 +101,7 @@ public abstract class LivingEntityMock extends EntityMock implements LivingEntit
 	}
 
 	@Override
+	@Deprecated
 	public boolean isPersistent()
 	{
 		// TODO Auto-generated method stub
@@ -105,6 +109,7 @@ public abstract class LivingEntityMock extends EntityMock implements LivingEntit
 	}
 
 	@Override
+	@Deprecated
 	public void setPersistent(boolean persistent)
 	{
 		// TODO Auto-generated method stub

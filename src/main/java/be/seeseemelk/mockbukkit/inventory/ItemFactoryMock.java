@@ -128,6 +128,7 @@ public class ItemFactoryMock implements ItemFactory
 	}
 
 	@Override
+	@Deprecated
 	public Material updateMaterial(ItemMeta meta, Material material)
 	{
 		return material;

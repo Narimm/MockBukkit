@@ -15,6 +15,7 @@ public class ScoreboardMock implements Scoreboard
 	private Map<String,Team> teams = new HashMap<>();
 
 	@Override
+	@Deprecated
 	public ObjectiveMock registerNewObjective(String name, String criteria) throws IllegalArgumentException
 	{
 		ObjectiveMock objective = new ObjectiveMock(this, name, criteria);
@@ -49,6 +50,7 @@ public class ScoreboardMock implements Scoreboard
 	}
 
 	@Override
+	@Deprecated
 	public Set<Score> getScores(OfflinePlayer player) throws IllegalArgumentException
 	{
 		return getScores(player.getName());
@@ -68,6 +70,7 @@ public class ScoreboardMock implements Scoreboard
 	}
 
 	@Override
+	@Deprecated
 	public void resetScores(OfflinePlayer player) throws IllegalArgumentException
 	{
 		resetScores(player.getName());
@@ -85,6 +88,7 @@ public class ScoreboardMock implements Scoreboard
 	}
 
 	@Override
+	@Deprecated
 	public Team getPlayerTeam(OfflinePlayer player) throws IllegalArgumentException
 	{
 		return getEntryTeam(player.getName());

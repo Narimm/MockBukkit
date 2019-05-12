@@ -132,12 +132,14 @@ public abstract class InventoryMock implements org.bukkit.inventory.Inventory
 	}
 	
 	@Override
+	@Deprecated
 	public String getName()
 	{
 		return name;
 	}
 	
 	@Override
+	@Deprecated
 	public String getTitle()
 	{
 		return name;

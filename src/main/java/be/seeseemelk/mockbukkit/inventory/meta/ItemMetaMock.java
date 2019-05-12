@@ -372,10 +372,6 @@ public class ItemMetaMock implements ItemMeta, Damageable
 		throw new UnimplementedOperationException();
 	}
 
-	@Override
-	public CustomItemTagContainer getCustomTagContainer() {
-		return null;
-	}
 
 	@Override
 	public boolean hasDamage()

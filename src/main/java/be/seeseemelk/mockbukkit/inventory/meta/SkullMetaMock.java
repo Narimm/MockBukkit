@@ -17,6 +17,7 @@ public class SkullMetaMock extends ItemMetaMock implements SkullMeta {
     private String owner;
 
     @Override
+    @Deprecated
     public String getOwner() {
         return owner;
     }
@@ -27,6 +28,7 @@ public class SkullMetaMock extends ItemMetaMock implements SkullMeta {
     }
 
     @Override
+    @Deprecated
     public boolean setOwner(String owner) {
         this.owner = owner;
         return true;
