@@ -3,6 +3,7 @@ package be.seeseemelk.mockbukkit.scheduler;
 import java.util.concurrent.CancellationException;
 
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 public class ScheduledTask implements BukkitTask
