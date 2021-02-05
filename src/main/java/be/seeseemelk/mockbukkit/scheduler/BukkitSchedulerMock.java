@@ -88,7 +88,8 @@ public class BukkitSchedulerMock implements BukkitScheduler
 				tasks.add(task);
 			}
 		}
-		if (oldTasks.size() == 0 && asyncTasksQueued > 0) {
+		if (oldTasks.size() == 0 && asyncTasksQueued > 0)
+		{
 			Logger.getLogger(LOGGER_NAME).warning("Asynchronous Tasks may have been lost -> " + asyncTasksQueued);
 			asyncTasksQueued = 0;
 		}
