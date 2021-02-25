@@ -1,16 +1,22 @@
 package be.seeseemelk.mockbukkit.scheduler;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.SynchronousQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -18,6 +24,7 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scheduler.BukkitWorker;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import org.jetbrains.annotations.NotNull;
 
 public class BukkitSchedulerMock implements BukkitScheduler
 {
@@ -25,9 +32,24 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	private long currentTick = 0;
 	private int id = 0;
 	private List<ScheduledTask> tasks = new LinkedList<>();
-	private ExecutorService pool = Executors.newCachedThreadPool();
+	private final ThreadPoolExecutor pool = new ThreadPoolExecutor(0, Integer.MAX_VALUE,
+		60L, TimeUnit.SECONDS,
+		new SynchronousQueue<>());
+	private Map<Future, Integer> workercheck = new HashMap<>();
+	private Map<Integer,BukkitWorker> workers = new HashMap<>();
+
 	private AtomicInteger asyncTasksRunning = new AtomicInteger();
 	private AtomicReference<Exception> asyncException = new AtomicReference<>();
+	private boolean running = true;
+
+	public BukkitSchedulerMock() {
+		pool.execute(new ThreadMonitor());
+	}
+
+	public final int getAsyncTasksQueued() {
+		return asyncTasksQueued;
+	}
+
 	private int asyncTasksQueued = 0;
 	private boolean shuttingDown = false;
 
@@ -39,6 +61,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		shuttingDown = true;
 		waitAsyncTasksFinished();
+		running = false;
 		pool.shutdown();
 
 		if (asyncException.get() != null)
@@ -306,7 +329,10 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		ScheduledTask scheduledTask = new ScheduledTask(id++, plugin, false, currentTick, new AsyncRunnable(task));
 		asyncTasksRunning.incrementAndGet();
-		pool.execute(scheduledTask.getRunnable());
+		BukkitWorker worker = new BukkitMockWorker(scheduledTask.getTaskId(),scheduledTask.getOwner(),null);
+		workers.put(worker.getTaskId(),worker);
+		Future<?> result = pool.submit(scheduledTask.getRunnable());
+		workercheck.put(result, worker.getTaskId());
 		return scheduledTask;
 	}
 
@@ -371,9 +397,12 @@ public class BukkitSchedulerMock implements BukkitScheduler
 		return runTaskTimerAsynchronously(plugin, (Runnable) task, delay, period);
 	}
 
-	class AsyncRunnable implements Runnable
+	class AsyncRunnable implements Runnable,BukkitTask
 	{
 		private final Runnable task;
+		private int taskId;
+		private Plugin owner;
+		private boolean async;
 
 		private AsyncRunnable(Runnable runnable)
 		{
@@ -394,6 +423,31 @@ public class BukkitSchedulerMock implements BukkitScheduler
 			asyncTasksRunning.decrementAndGet();
 		}
 
+		@Override
+		public int getTaskId() {
+			return taskId;
+		}
+
+		@NotNull
+		@Override
+		public Plugin getOwner() {
+			return owner;
+		}
+
+		@Override
+		public boolean isSync() {
+			return !async;
+		}
+
+		@Override
+		public boolean isCancelled() {
+			return false;
+		}
+
+		@Override
+		public void cancel() {
+
+		}
 	}
 
 	@Override
@@ -437,4 +491,59 @@ public class BukkitSchedulerMock implements BukkitScheduler
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}
+
+	public static class  BukkitMockWorker implements BukkitWorker{
+
+		private int taskId;
+		private Plugin plugin;
+		private Thread thread;
+
+		public BukkitMockWorker(int taskId, Plugin plugin, Thread thread) {
+			this.taskId = taskId;
+			this.plugin = plugin;
+			this.thread = thread;
+		}
+
+		@Override
+		public int getTaskId() {
+			return taskId;
+		}
+
+		@NotNull
+		@Override
+		public Plugin getOwner() {
+			return plugin;
+		}
+
+		@NotNull
+		@Override
+		public Thread getThread() {
+			return thread;
+		}
+	}
+
+	private class ThreadMonitor implements Runnable {
+
+			@Override
+			public void run() {
+				{
+					while(running){
+						if(workers != null){
+							Map<Future ,Integer> checker = new HashMap<>(workercheck);
+							checker.forEach(new BiConsumer<Future, Integer>() {
+								@Override
+								public void accept(Future future, Integer taskId) {
+									if(future.isDone()){
+										workercheck.remove(future);
+										workers.remove(taskId);
+									}
+								}
+							});
+						}
+					}
+				}
+			}
+	}
+
+
 }

@@ -69,10 +69,10 @@ import org.bukkit.loot.LootTable;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicesManager;
+import org.bukkit.plugin.SimpleServicesManager;
 import org.bukkit.plugin.messaging.Messenger;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.CachedServerIcon;
-import org.jetbrains.annotations.NotNull;
 
 import be.seeseemelk.mockbukkit.boss.BossBarMock;
 import be.seeseemelk.mockbukkit.boss.KeyedBossBarMock;
@@ -103,6 +103,7 @@ import be.seeseemelk.mockbukkit.scoreboard.ScoreboardManagerMock;
 import be.seeseemelk.mockbukkit.tags.TagRegistry;
 import be.seeseemelk.mockbukkit.tags.TagWrapperMock;
 import be.seeseemelk.mockbukkit.tags.TagsMock;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
 public class ServerMock implements Server
@@ -124,6 +125,7 @@ public class ServerMock implements Server
 	private final PlayerMockFactory playerFactory = new PlayerMockFactory(this);
 	private final PluginManagerMock pluginManager = new PluginManagerMock(this);
 	private final ScoreboardManagerMock scoreboardManager = new ScoreboardManagerMock();
+	private final ServicesManager servicesManager = new SimpleServicesManager();
 	private final BukkitSchedulerMock scheduler = new BukkitSchedulerMock();
 	private final PlayerList playerList = new PlayerList();
 	private ConsoleCommandSender consoleSender;
@@ -953,7 +955,8 @@ public class ServerMock implements Server
 	}
 
 	@Override
-	public ServicesManager getServicesManager()
+	public @NotNull
+	ServicesManager getServicesManager()
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();

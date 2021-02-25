@@ -1826,6 +1826,13 @@ public class PlayerMock extends LivingEntityMock implements Player
 	}
 
 	@Override
+	public void sendBlockDamage(@NotNull Location loc, float progress) {
+
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
 	public void updateCommands()
 	{
 		// TODO Auto-generated method stub

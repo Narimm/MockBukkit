@@ -83,6 +83,7 @@ public class BukkitSchedulerMockTest
 	}
 
 	private BukkitTask testTask; /* This is needed because a lambda can't reach writable closures */
+
 	@Test
 	public void runTaskTimer_SelfCancelling()
 	{
@@ -177,6 +178,33 @@ public class BukkitSchedulerMockTest
 		scheduler.performTicks(1L);
 		assertFalse(scheduler.isQueued(testTask.getTaskId()));
 		assertEquals(2, count.get());
+	}
+
+	@Test
+	public void test_cancels_before_running_async() {
+
+		BukkitTask task = scheduler.runTaskLaterAsynchronously(null, new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Thread.sleep(1000);
+					}catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			},500);
+		assertEquals(1,scheduler.getAsyncTasksQueued());
+		assertEquals(1,scheduler.getPendingTasks());
+		scheduler.performTicks(10);
+		assertEquals(1,scheduler.getPendingTasks());
+		task.cancel();
+		assertEquals(1,scheduler.getPendingTasks());
+		assertEquals(1,scheduler.getAsyncTasksQueued());
+		assertEquals(0,scheduler.getPendingTasks());
+
+		scheduler.performTicks(600);
+		assertEquals(0,scheduler.getAsyncTasksQueued());
+
 	}
 }
 
