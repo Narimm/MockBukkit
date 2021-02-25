@@ -29,6 +29,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	private AtomicInteger asyncTasksRunning = new AtomicInteger();
 	private AtomicReference<Exception> asyncException = new AtomicReference<>();
 	private int asyncTasksQueued = 0;
+	private boolean shuttingDown = false;
 
 	/**
 	 * Shuts the scheduler down. Note that this function will throw exception that where thrown by old asynchronous
@@ -36,6 +37,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	 */
 	public void shutdown()
 	{
+		shuttingDown = true;
 		waitAsyncTasksFinished();
 		pool.shutdown();
 
@@ -150,7 +152,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		delay = Math.max(delay, 1);
 		ScheduledTask scheduledTask = new ScheduledTask(id++, plugin, true, currentTick + delay, task);
-		tasks.add(scheduledTask);
+		checkForShutDown(scheduledTask,false);
 		return scheduledTask;
 	}
 
@@ -159,7 +161,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		delay = Math.max(delay, 1);
 		RepeatingTask repeatingTask = new RepeatingTask(id++, plugin, true, currentTick + delay, period, task);
-		tasks.add(repeatingTask);
+		checkForShutDown(repeatingTask,false);
 		return repeatingTask;
 	}
 
@@ -325,8 +327,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		ScheduledTask scheduledTask = new ScheduledTask(id++, plugin, false, currentTick + delay,
 		        new AsyncRunnable(task));
-		tasks.add(scheduledTask);
-		asyncTasksQueued++;
+		checkForShutDown(scheduledTask,true);
 		return scheduledTask;
 	}
 
@@ -341,8 +342,24 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		RepeatingTask scheduledTask = new RepeatingTask(id++, plugin, false, currentTick + delay, period,
 		        new AsyncRunnable(task));
-		tasks.add(scheduledTask);
+		checkForShutDown(scheduledTask,false);
 		return scheduledTask;
+	}
+
+	private BukkitTask checkForShutDown(ScheduledTask task,boolean asyncQueued){
+		if(shuttingDown) {
+
+			Logger.getLogger(LOGGER_NAME).warning(task.getOwner().getName()
+					+ "(" + task.getRunnable().getClass().getSimpleName()
+					+  "): Scheduler is shutting down - why are you scheduling tasks - CANCELLED");
+			task.cancel();
+			return task;
+		}
+		if( asyncQueued ) {
+			asyncTasksQueued++;
+		}
+		tasks.add(task);
+		return task;
 	}
 
 	@Override
