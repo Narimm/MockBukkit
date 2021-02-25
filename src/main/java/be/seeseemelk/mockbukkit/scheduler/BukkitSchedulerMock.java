@@ -152,7 +152,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		delay = Math.max(delay, 1);
 		ScheduledTask scheduledTask = new ScheduledTask(id++, plugin, true, currentTick + delay, task);
-		checkForShutDown(scheduledTask,false);
+		checkForShutDown(scheduledTask, false);
 		return scheduledTask;
 	}
 
@@ -161,7 +161,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		delay = Math.max(delay, 1);
 		RepeatingTask repeatingTask = new RepeatingTask(id++, plugin, true, currentTick + delay, period, task);
-		checkForShutDown(repeatingTask,false);
+		checkForShutDown(repeatingTask, false);
 		return repeatingTask;
 	}
 
@@ -327,7 +327,7 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		ScheduledTask scheduledTask = new ScheduledTask(id++, plugin, false, currentTick + delay,
 		        new AsyncRunnable(task));
-		checkForShutDown(scheduledTask,true);
+		checkForShutDown(scheduledTask, true);
 		return scheduledTask;
 	}
 
@@ -342,20 +342,23 @@ public class BukkitSchedulerMock implements BukkitScheduler
 	{
 		RepeatingTask scheduledTask = new RepeatingTask(id++, plugin, false, currentTick + delay, period,
 		        new AsyncRunnable(task));
-		checkForShutDown(scheduledTask,false);
+		checkForShutDown(scheduledTask, false);
 		return scheduledTask;
 	}
 
-	private BukkitTask checkForShutDown(ScheduledTask task,boolean asyncQueued){
-		if(shuttingDown) {
+	private BukkitTask checkForShutDown(ScheduledTask task, boolean asyncQueued)
+	{
+		if (shuttingDown)
+		{
 
 			Logger.getLogger(LOGGER_NAME).warning(task.getOwner().getName()
-					+ "(" + task.getRunnable().getClass().getSimpleName()
-					+  "): Scheduler is shutting down - why are you scheduling tasks - CANCELLED");
+			                                      + "(" + task.getRunnable().getClass().getSimpleName()
+			                                      +  "): Scheduler is shutting down - why are you scheduling tasks - CANCELLED");
 			task.cancel();
 			return task;
 		}
-		if( asyncQueued ) {
+		if ( asyncQueued )
+		{
 			asyncTasksQueued++;
 		}
 		tasks.add(task);
