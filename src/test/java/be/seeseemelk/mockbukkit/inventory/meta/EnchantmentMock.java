@@ -1,5 +1,7 @@
 package be.seeseemelk.mockbukkit.inventory.meta;
 
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import net.kyori.adventure.text.Component;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
@@ -64,6 +66,13 @@ class EnchantmentMock extends Enchantment
 	public boolean canEnchantItem(@NotNull ItemStack item)
 	{
 		return true;
+	}
+
+	@Override
+	public @NotNull Component displayName(int level) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
 	}
 
 	@Override

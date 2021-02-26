@@ -8,7 +8,9 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.UnsafeValues;
 import org.bukkit.advancement.Advancement;
+import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.plugin.InvalidPluginException;
@@ -19,6 +21,13 @@ public class MockUnsafeValues implements UnsafeValues
 {
 
 	private final Set<String> compatibleApiVersions = new HashSet<>(Arrays.asList("1.13", "1.14", "1.15", "1.16"));
+
+	@Override
+	public void reportTimings()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
 
 	@Override
 	public Material toLegacy(Material material)
@@ -97,6 +106,51 @@ public class MockUnsafeValues implements UnsafeValues
 	@Override
 	public boolean removeAdvancement(NamespacedKey key)
 	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public String getTimingsServerName() {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();	}
+
+	@Override
+	public boolean isSupportedApiVersion(String apiVersion) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();	}
+
+	@Override
+	public byte[] serializeItem(ItemStack item) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();	}
+
+	@Override
+	public ItemStack deserializeItem(byte[] data) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public String getTranslationKey(Material mat) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public String getTranslationKey(Block block) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public String getTranslationKey(EntityType type) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public int nextEntityId() {
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
 	}

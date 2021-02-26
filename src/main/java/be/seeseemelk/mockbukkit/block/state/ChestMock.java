@@ -18,7 +18,7 @@ import be.seeseemelk.mockbukkit.inventory.InventoryMock;
  * @author TheBusyBiscuit
  *
  */
-public class ChestMock extends ContainerMock implements Chest
+public class ChestMock extends LootableContainerMock implements Chest
 {
 
 	public ChestMock(@NotNull Material material)
@@ -36,19 +36,6 @@ public class ChestMock extends ContainerMock implements Chest
 		super(state);
 	}
 
-	@Override
-	public void setLootTable(LootTable table)
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-
-	@Override
-	public LootTable getLootTable()
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
 
 	@Override
 	public void setSeed(long seed)
@@ -79,7 +66,7 @@ public class ChestMock extends ContainerMock implements Chest
 	}
 
 	@Override
-	public Inventory getBlockInventory()
+	public @NotNull Inventory getBlockInventory()
 	{
 		return getInventory();
 	}
@@ -91,7 +78,7 @@ public class ChestMock extends ContainerMock implements Chest
 	}
 
 	@Override
-	public BlockState getSnapshot()
+	public @NotNull BlockState getSnapshot()
 	{
 		return new ChestMock(this);
 	}

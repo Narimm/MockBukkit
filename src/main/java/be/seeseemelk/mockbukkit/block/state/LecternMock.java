@@ -1,5 +1,6 @@
 package be.seeseemelk.mockbukkit.block.state;
 
+import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import be.seeseemelk.mockbukkit.inventory.InventoryMock;
 import be.seeseemelk.mockbukkit.inventory.LecternInventoryMock;
 
-public class LecternMock extends ContainerMock implements Lectern
+public class LecternMock extends LootableContainerMock implements Lectern
 {
 
 	private int currentPage;
@@ -39,7 +40,7 @@ public class LecternMock extends ContainerMock implements Lectern
 	}
 
 	@Override
-	public BlockState getSnapshot()
+	public @NotNull BlockState getSnapshot()
 	{
 		return new LecternMock(this);
 	}
@@ -77,5 +78,19 @@ public class LecternMock extends ContainerMock implements Lectern
 		{
 			return 1;
 		}
+	}
+
+	@Override
+	public void setSeed(long seed)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public long getSeed()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
 	}
 }

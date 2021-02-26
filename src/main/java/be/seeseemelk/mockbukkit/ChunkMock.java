@@ -1,6 +1,7 @@
 package be.seeseemelk.mockbukkit;
 
 import java.util.Collection;
+import java.util.function.Predicate;
 
 import be.seeseemelk.mockbukkit.persistence.PersistentDataContainerMock;
 import org.apache.commons.lang.Validate;
@@ -13,6 +14,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Entity;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 public class ChunkMock implements Chunk
 {
@@ -79,6 +81,20 @@ public class ChunkMock implements Chunk
 
 	@Override
 	public BlockState[] getTileEntities()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NotNull BlockState[] getTileEntities(boolean useSnapshot)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NotNull Collection<BlockState> getTileEntities(@NotNull Predicate<Block> blockPredicate, boolean useSnapshot)
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();

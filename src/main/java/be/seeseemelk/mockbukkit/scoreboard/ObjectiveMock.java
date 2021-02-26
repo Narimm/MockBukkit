@@ -2,13 +2,18 @@ package be.seeseemelk.mockbukkit.scoreboard;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
+import be.seeseemelk.mockbukkit.AdventureImpl;
+import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.RenderType;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class ObjectiveMock implements Objective
 {
@@ -16,15 +21,23 @@ public class ObjectiveMock implements Objective
 	private final String name;
 	private final String criteria;
 	private final Map<String, ScoreMock> scores = new HashMap<>();
-	private String displayName;
+	private Component displayName;
 	private DisplaySlot displaySlot;
-	private RenderType renderType;
+	private RenderType renderType = RenderType.INTEGER;
+
+	public ObjectiveMock(ScoreboardMock scoreboard, String name, Component displayName, String criteria, RenderType type) {
+		this.scoreboard = scoreboard;
+		this.name = name;
+		this.displayName = displayName;
+		this.criteria = criteria;
+		this.renderType = type;
+	}
 
 	public ObjectiveMock(ScoreboardMock scoreboard, String name, String criteria)
 	{
 		this.scoreboard = scoreboard;
 		this.name = name;
-		this.displayName = name;
+		this.displayName = AdventureImpl.LEGACYSERIALIZER.deserialize(name);
 		this.criteria = criteria;
 	}
 
@@ -35,15 +48,25 @@ public class ObjectiveMock implements Objective
 	}
 
 	@Override
-	public String getDisplayName() throws IllegalStateException
+	public @NotNull Component displayName() throws IllegalStateException {
+		return null;
+	}
+
+	@Override
+	public void displayName(@Nullable Component displayName) throws IllegalStateException, IllegalArgumentException {
+		this.displayName = displayName;
+	}
+
+	@Override
+	public @NotNull String getDisplayName() throws IllegalStateException
 	{
-		return displayName;
+		return AdventureImpl.LEGACYSERIALIZER.serialize(displayName);
 	}
 
 	@Override
 	public void setDisplayName(String displayName) throws IllegalStateException, IllegalArgumentException
 	{
-		this.displayName = displayName;
+		displayName(AdventureImpl.LEGACYSERIALIZER.deserialize(displayName));
 	}
 
 	@Override

@@ -18,7 +18,7 @@ import be.seeseemelk.mockbukkit.inventory.InventoryMock;
  * @author TheBusyBiscuit
  *
  */
-public class DispenserMock extends ContainerMock implements Dispenser
+public class DispenserMock extends LootableContainerMock implements Dispenser
 {
 
 	public DispenserMock(@NotNull Material material)
@@ -36,19 +36,6 @@ public class DispenserMock extends ContainerMock implements Dispenser
 		super(state);
 	}
 
-	@Override
-	public void setLootTable(LootTable table)
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-
-	@Override
-	public LootTable getLootTable()
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
 
 	@Override
 	public void setSeed(long seed)
@@ -71,7 +58,7 @@ public class DispenserMock extends ContainerMock implements Dispenser
 	}
 
 	@Override
-	public BlockState getSnapshot()
+	public @NotNull BlockState getSnapshot()
 	{
 		return new DispenserMock(this);
 	}

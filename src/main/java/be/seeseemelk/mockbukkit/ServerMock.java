@@ -22,6 +22,11 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import com.destroystokyo.paper.entity.ai.MobGoals;
+import com.destroystokyo.paper.profile.PlayerProfile;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextComponent;
 import org.apache.commons.lang.Validate;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList;
@@ -60,11 +65,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.generator.ChunkGenerator.ChunkData;
 import org.bukkit.help.HelpMap;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemFactory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.Merchant;
-import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.*;
 import org.bukkit.loot.LootTable;
 import org.bukkit.map.MapView;
 import org.bukkit.plugin.Plugin;
@@ -103,14 +104,16 @@ import be.seeseemelk.mockbukkit.scoreboard.ScoreboardManagerMock;
 import be.seeseemelk.mockbukkit.tags.TagRegistry;
 import be.seeseemelk.mockbukkit.tags.TagWrapperMock;
 import be.seeseemelk.mockbukkit.tags.TagsMock;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class ServerMock implements Server
 {
 	private static final String BUKKIT_VERSION = "1.16.5";
 	private static final String JOIN_MESSAGE = "%s has joined the server.";
-	private static final String MOTD = "A Minecraft Server";
+	private static final Component MOTD = Component.text("A Minecraft Server");
 
 	private final Logger logger;
 	private final Thread mainThread;
@@ -433,6 +436,11 @@ public class ServerMock implements Server
 	}
 
 	@Override
+	public @NotNull String getMinecraftVersion() {
+		return null;
+	}
+
+	@Override
 	public Collection<? extends PlayerMock> getOnlinePlayers()
 	{
 		return playerList.getOnlinePlayers();
@@ -466,6 +474,11 @@ public class ServerMock implements Server
 	public Player getPlayer(UUID id)
 	{
 		return playerList.getPlayer(id);
+	}
+
+	@Override
+	public @Nullable UUID getPlayerUniqueId(@NotNull String playerName) {
+		return null;
 	}
 
 	@Override
@@ -602,6 +615,11 @@ public class ServerMock implements Server
 	}
 
 	@Override
+	public @NotNull Inventory createInventory(@Nullable InventoryHolder owner, @NotNull InventoryType type, @NotNull Component title) {
+		return null;
+	}
+
+	@Override
 	public InventoryMock createInventory(InventoryHolder owner, InventoryType type, String title)
 	{
 		return createInventory(owner, type, title, -1);
@@ -614,9 +632,19 @@ public class ServerMock implements Server
 	}
 
 	@Override
+	public @NotNull Inventory createInventory(@Nullable InventoryHolder owner, int size, @NotNull Component title) throws IllegalArgumentException {
+		return null;
+	}
+
+	@Override
 	public InventoryMock createInventory(InventoryHolder owner, int size, String title)
 	{
 		return createInventory(owner, InventoryType.CHEST, title, size);
+	}
+
+	@Override
+	public @NotNull Merchant createMerchant(@Nullable Component title) {
+		return null;
 	}
 
 	@Override
@@ -653,6 +681,11 @@ public class ServerMock implements Server
 	public int getMaxPlayers()
 	{
 		return playerList.getMaxPlayers();
+	}
+
+	@Override
+	public void setMaxPlayers(int maxPlayers) {
+
 	}
 
 	@Override
@@ -1075,9 +1108,19 @@ public class ServerMock implements Server
 	}
 
 	@Override
+	public int broadcast(@NotNull Component message, @NotNull String permission) {
+		return 0;
+	}
+
+	@Override
 	public OfflinePlayer getOfflinePlayer(String name)
 	{
 		return playerList.getOfflinePlayer(name);
+	}
+
+	@Override
+	public @Nullable OfflinePlayer getOfflinePlayerIfCached(@NotNull String name) {
+		return null;
 	}
 
 	@Override
@@ -1158,9 +1201,19 @@ public class ServerMock implements Server
 	}
 
 	@Override
+	public @NotNull Component motd() {
+		return MOTD;
+	}
+
+	@Override
 	public String getMotd()
 	{
-		return MOTD;
+		return TextComponent.ofChildren(MOTD).content();
+	}
+
+	@Override
+	public @Nullable Component shutdownMessage() {
+		return null;
 	}
 
 	@Override
@@ -1226,6 +1279,11 @@ public class ServerMock implements Server
 	}
 
 	@Override
+	public @NotNull ChunkData createVanillaChunkData(@NotNull World world, int x, int z) {
+		return null;
+	}
+
+	@Override
 	public BossBar createBossBar(String title, BarColor color, BarStyle style, BarFlag... flags)
 	{
 		BossBar bar = new BossBarMock(title, color, style, flags);
@@ -1237,6 +1295,21 @@ public class ServerMock implements Server
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NotNull double[] getTPS() {
+		return new double[0];
+	}
+
+	@Override
+	public @NotNull long[] getTickTimes() {
+		return new long[0];
+	}
+
+	@Override
+	public double getAverageTickTime() {
+		return 0;
 	}
 
 	@Override
@@ -1516,7 +1589,80 @@ public class ServerMock implements Server
 	}
 
 	@Override
+	public void reloadPermissions()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public boolean reloadCommandAliases()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public boolean suggestPlayerNamesWhenNullTabCompletions()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NotNull String getPermissionMessage()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NotNull PlayerProfile createProfile(@NotNull UUID uuid)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NotNull PlayerProfile createProfile(@NotNull String name)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NotNull PlayerProfile createProfile(@Nullable UUID uuid, @Nullable String name)
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public int getCurrentTick() {
+		return new Long(getScheduler().getCurrentTick()).intValue();
+	}
+
+	@Override
+	public boolean isStopping() {
+		return false;
+	}
+
+	@Override
+	public @NotNull MobGoals getMobGoals()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
 	public int getMaxWorldSize()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NonNull Iterable<? extends Audience> audiences()
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();

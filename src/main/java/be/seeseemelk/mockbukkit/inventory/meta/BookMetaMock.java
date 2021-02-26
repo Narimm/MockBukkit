@@ -5,12 +5,18 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import net.kyori.adventure.inventory.Book;
+import net.kyori.adventure.text.Component;
 import org.apache.commons.lang.Validate;
 import org.bukkit.inventory.meta.BookMeta;
 
 import com.google.common.base.Strings;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
 
 /**
  * Created by SimplyBallistic on 26/10/2018
@@ -70,6 +76,69 @@ public class BookMetaMock extends ItemMetaMock implements BookMeta
 	public boolean hasPages()
 	{
 		return !this.pages.isEmpty();
+	}
+
+	@Override
+	public @Nullable Component title() {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
+	@Override
+	public @NotNull BookMeta title(@Nullable Component title) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
+	@Override
+	public @Nullable Component author() {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
+	@Override
+	public @NotNull BookMeta author(@Nullable Component author) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
+	@Override
+	public @NonNull @Unmodifiable List<Component> pages() {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
+	@Override
+	public @NonNull Book pages(@NonNull List<Component> pages) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
+	@Override
+	public @NotNull Component page(int page) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
+	@Override
+	public void page(int page, @NotNull Component data) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
+	}
+
+	@Override
+	public void addPages(@NotNull Component... pages) {
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+
 	}
 
 	@Override

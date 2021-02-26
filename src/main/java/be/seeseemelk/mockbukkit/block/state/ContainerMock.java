@@ -1,5 +1,8 @@
 package be.seeseemelk.mockbukkit.block.state;
 
+import be.seeseemelk.mockbukkit.AdventureImpl;
+import com.destroystokyo.paper.loottable.LootableInventory;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -16,11 +19,11 @@ import be.seeseemelk.mockbukkit.inventory.InventoryMock;
  * @author TheBusyBiscuit
  *
  */
-public abstract class ContainerMock extends TileStateMock implements Container
+public abstract class ContainerMock extends TileStateMock implements Container, LootableInventory
 {
 
 	private final Inventory inventory;
-	private String customName;
+	private Component customComponentName;
 	private String lock = "";
 
 	public ContainerMock(@NotNull Material material)
@@ -38,13 +41,15 @@ public abstract class ContainerMock extends TileStateMock implements Container
 	protected ContainerMock(@NotNull ContainerMock state)
 	{
 		super(state);
+		this.lock = state.lock;
+		this.customComponentName = state.customComponentName;
 		this.inventory = state.getInventory();
 	}
 
 	protected abstract InventoryMock createInventory();
 
 	@Override
-	public abstract BlockState getSnapshot();
+	public abstract @NotNull BlockState getSnapshot();
 
 	@Override
 	public boolean isLocked()
@@ -73,26 +78,36 @@ public abstract class ContainerMock extends TileStateMock implements Container
 	}
 
 	@Override
+	public @Nullable Component customName() {
+		return customComponentName;
+	}
+
+	@Override
+	public void customName(@Nullable Component customName) {
+		this.customComponentName = customName;
+	}
+
+	@Override
 	@Nullable
 	public String getCustomName()
 	{
-		return customName;
+		return AdventureImpl.LEGACYSERIALIZER.serialize(customComponentName);
 	}
 
 	@Override
 	public void setCustomName(String name)
 	{
-		this.customName = name;
+		this.customComponentName = AdventureImpl.LEGACYSERIALIZER.deserialize(name);
 	}
 
 	@Override
-	public Inventory getInventory()
+	public @NotNull Inventory getInventory()
 	{
 		return inventory;
 	}
 
 	@Override
-	public Inventory getSnapshotInventory()
+	public @NotNull Inventory getSnapshotInventory()
 	{
 		return ((InventoryMock) inventory).getSnapshot();
 	}

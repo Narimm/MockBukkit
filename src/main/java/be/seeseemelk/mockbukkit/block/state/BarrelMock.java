@@ -19,7 +19,7 @@ import be.seeseemelk.mockbukkit.inventory.InventoryMock;
  * @see ChestMock
  *
  */
-public class BarrelMock extends ContainerMock implements Barrel
+public class BarrelMock extends LootableContainerMock implements Barrel
 {
 
 	public BarrelMock(@NotNull Material material)
@@ -86,7 +86,7 @@ public class BarrelMock extends ContainerMock implements Barrel
 	}
 
 	@Override
-	public BlockState getSnapshot()
+	public @NotNull BlockState getSnapshot()
 	{
 		return new BarrelMock(this);
 	}

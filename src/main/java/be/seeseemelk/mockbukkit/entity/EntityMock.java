@@ -13,10 +13,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.LinkedTransferQueue;
 
-import org.bukkit.Bukkit;
-import org.bukkit.EntityEffect;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.entity.Entity;
@@ -39,11 +36,13 @@ import be.seeseemelk.mockbukkit.UnimplementedOperationException;
 import be.seeseemelk.mockbukkit.command.MessageTarget;
 import be.seeseemelk.mockbukkit.metadata.MetadataTable;
 import be.seeseemelk.mockbukkit.persistence.PersistentDataContainerMock;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class EntityMock implements Entity, MessageTarget
 {
 	private final ServerMock server;
 	private final UUID uuid;
+	private final Location spawnLocation;
 	private Location location;
 	private boolean teleported;
 	private TeleportCause teleportCause;
@@ -64,9 +63,15 @@ public abstract class EntityMock implements Entity, MessageTarget
 		this.uuid = uuid;
 
 		if (!Bukkit.getWorlds().isEmpty())
-			location = Bukkit.getWorlds().get(0).getSpawnLocation();
+		{
+			spawnLocation = Bukkit.getWorlds().get(0).getSpawnLocation();
+		}
 		else
-			location = new Location(null, 0, 0, 0);
+		{
+			spawnLocation = new Location(null, 0, 0, 0);
+		}
+		location = spawnLocation.clone();
+
 	}
 
 	@Override
@@ -810,9 +815,18 @@ public abstract class EntityMock implements Entity, MessageTarget
 	}
 
 	@Override
+	public @Nullable Location getOrigin() {
+		return spawnLocation;
+	}
+
+	@Override
 	public boolean isInWater()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		if(location.getWorld() != null) {
+			if (location.getWorld().getBlockAt(location).getType() == Material.WATER) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

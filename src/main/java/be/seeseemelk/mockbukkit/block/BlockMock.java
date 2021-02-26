@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 import java.util.Collection;
 import java.util.List;
 
+import com.destroystokyo.paper.block.BlockSoundGroup;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Chunk;
 import org.bukkit.FluidCollisionMode;
@@ -250,6 +251,15 @@ public class BlockMock implements Block
 	}
 
 	@Override
+	public @NotNull BlockState getState(boolean useSnapshot) {
+		if(useSnapshot){
+			return getState();
+		} else {
+			return state;
+		}
+	}
+
+	@Override
 	public Biome getBiome()
 	{
 		// TODO Auto-generated method stub
@@ -321,6 +331,33 @@ public class BlockMock implements Block
 	}
 
 	@Override
+	public boolean isBuildable()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public boolean isBurnable()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public boolean isReplaceable()
+	{
+		// TODO Auto-generated method stub
+		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public boolean isSolid()
+	{
+		return !isLiquid();
+	}
+
+	@Override
 	public double getTemperature()
 	{
 		// TODO Auto-generated method stub
@@ -354,6 +391,12 @@ public class BlockMock implements Block
 
 	@Override
 	public boolean breakNaturally(ItemStack tool)
+	{
+		return this.breakNaturally();
+	}
+
+	@Override
+	public boolean breakNaturally(@NotNull ItemStack tool, boolean triggerEffect)
 	{
 		return this.breakNaturally();
 	}
@@ -410,6 +453,21 @@ public class BlockMock implements Block
 	{
 		// TODO Auto-generated method stub
 		throw new UnimplementedOperationException();
+	}
+
+	@Override
+	public @NotNull BlockSoundGroup getSoundGroup() {
+		return null;
+	}
+
+	@Override
+	public @NotNull String getTranslationKey() {
+		return null;
+	}
+
+	@Override
+	public @NotNull float getDestroySpeed(@NotNull ItemStack itemStack) {
+		return 0;
 	}
 
 	@Override

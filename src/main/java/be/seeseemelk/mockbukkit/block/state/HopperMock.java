@@ -17,7 +17,7 @@ import be.seeseemelk.mockbukkit.inventory.InventoryMock;
  * @author TheBusyBiscuit
  *
  */
-public class HopperMock extends ContainerMock implements Hopper
+public class HopperMock extends LootableContainerMock implements Hopper
 {
 
 	public HopperMock(@NotNull Material material)
@@ -33,20 +33,6 @@ public class HopperMock extends ContainerMock implements Hopper
 	protected HopperMock(@NotNull HopperMock state)
 	{
 		super(state);
-	}
-
-	@Override
-	public void setLootTable(LootTable table)
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-
-	@Override
-	public LootTable getLootTable()
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
 	}
 
 	@Override
@@ -70,7 +56,7 @@ public class HopperMock extends ContainerMock implements Hopper
 	}
 
 	@Override
-	public BlockState getSnapshot()
+	public @NotNull BlockState getSnapshot()
 	{
 		return new HopperMock(this);
 	}

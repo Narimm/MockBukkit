@@ -3,6 +3,7 @@ package be.seeseemelk.mockbukkit.scoreboard;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -12,6 +13,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import be.seeseemelk.mockbukkit.UnimplementedOperationException;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @SuppressWarnings("deprecation")
 public class ScoreboardMock implements Scoreboard
@@ -24,6 +27,18 @@ public class ScoreboardMock implements Scoreboard
 	public ObjectiveMock registerNewObjective(String name, String criteria) throws IllegalArgumentException
 	{
 		ObjectiveMock objective = new ObjectiveMock(this, name, criteria);
+		objectives.put(name, objective);
+		return objective;
+	}
+
+	@Override
+	public @NotNull Objective registerNewObjective(@NotNull String name, @NotNull String criteria, @Nullable Component displayName) throws IllegalArgumentException {
+		return null;
+	}
+
+	@Override
+	public @NotNull Objective registerNewObjective(@NotNull String name, @NotNull String criteria, @Nullable Component displayName, @NotNull RenderType renderType) throws IllegalArgumentException {
+		ObjectiveMock objective = new ObjectiveMock(this, name,displayName, criteria,null);
 		objectives.put(name, objective);
 		return objective;
 	}

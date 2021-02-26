@@ -19,7 +19,7 @@ import be.seeseemelk.mockbukkit.inventory.ShulkerBoxInventoryMock;
  * @author TheBusyBiscuit
  *
  */
-public class ShulkerBoxMock extends ContainerMock implements ShulkerBox
+public class ShulkerBoxMock extends LootableContainerMock implements ShulkerBox
 {
 
 	private final DyeColor color;
@@ -87,20 +87,6 @@ public class ShulkerBoxMock extends ContainerMock implements ShulkerBox
 	}
 
 	@Override
-	public void setLootTable(LootTable table)
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-
-	@Override
-	public LootTable getLootTable()
-	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
-	}
-
-	@Override
 	public void setSeed(long seed)
 	{
 		// TODO Auto-generated method stub
@@ -135,7 +121,7 @@ public class ShulkerBoxMock extends ContainerMock implements ShulkerBox
 	}
 
 	@Override
-	public BlockState getSnapshot()
+	public @NotNull BlockState getSnapshot()
 	{
 		return new ShulkerBoxMock(this);
 	}
